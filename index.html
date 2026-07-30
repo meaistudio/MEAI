@@ -23,7 +23,11 @@
         }
 
         /* Header / Nav */
+        /* Header / Nav Sticky & Blur */
         header {
+            position: sticky;
+            top: 0;
+            z-index: 1000; /* Pastikan selalu berada di atas elemen lain */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -31,6 +35,11 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 14px;
             letter-spacing: 1px;
+            
+            /* Efek Transparan dan Blur */
+            background-color: rgba(13, 13, 13, 0.75); /* Warna latar gelap dengan opasitas */
+            backdrop-filter: blur(12px);             /* Efek buram / glassmorphism */
+            -webkit-backdrop-filter: blur(12px);     /* Dukungan untuk Safari */
         }
 
         .header-left, .header-center, .header-right {
