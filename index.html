@@ -200,6 +200,7 @@
         .portfolio {
             padding: 100px 50px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative; /* Penting untuk posisi tombol absolute di HP */
         }
 
         .portfolio-header {
@@ -272,21 +273,33 @@
         }
 
         /* Tombol Navigasi Portofolio (Hanya muncul di HP) */
-        .portfolio-nav-btns {
+        portfolio-nav-btns {
             display: none;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 20px;
+            justify-content: space-between;
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            padding: 0 10px; /* Jarak dari tepi layar HP */
+            pointer-events: none; /* Agar area tengah tetap bisa disentuh */
         }
 
         .port-btn {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(13, 13, 13, 0.8);
             color: #ffffff;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 10px 18px;
-            border-radius: 4px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: auto; /* Mengaktifkan klik pada tombol */
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             transition: background 0.2s;
         }
 
