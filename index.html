@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MEAI Studio</title>
-    
     <!-- Favicon menggunakan logo -->
     <link rel="icon" type="image/png" href="asset/logo/meai">
-
     <style>
         * {
             margin: 0;
@@ -22,12 +20,11 @@
             overflow-x: hidden;
         }
 
-        /* Header / Nav */
         /* Header / Nav Sticky & Blur */
         header {
             position: sticky;
             top: 0;
-            z-index: 1000; /* Pastikan selalu berada di atas elemen lain */
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -35,11 +32,9 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 14px;
             letter-spacing: 1px;
-            
-            /* Efek Transparan dan Blur */
-            background-color: rgba(13, 13, 13, 0.75); /* Warna latar gelap dengan opasitas */
-            backdrop-filter: blur(12px);             /* Efek buram / glassmorphism */
-            -webkit-backdrop-filter: blur(12px);     /* Dukungan untuk Safari */
+            background-color: rgba(13, 13, 13, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .header-left, .header-center, .header-right {
@@ -48,8 +43,7 @@
             gap: 15px;
         }
 
-        /* Styling Aksen Logo pada Header */
-/* Styling Aksen Logo pada Header dengan Invert Putih */
+        /* Styling Aksen Logo pada Header dengan Invert Putih */
         .brand-logo {
             height: 28px;
             width: auto;
@@ -64,6 +58,59 @@
 
         .header-right {
             cursor: pointer;
+            user-select: none;
+        }
+
+        /* Panel Dropdown Options dari Atas (Global untuk Desktop & Mobile) */
+        .options-panel {
+            position: fixed;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            background-color: #f4f4f4;
+            color: #111111;
+            padding: 60px 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: top 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+            z-index: 999;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .options-panel.active {
+            top: 0;
+        }
+
+        .option-group h4 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .option-group p, .option-group a {
+            font-size: 16px;
+            color: #111;
+            text-decoration: none;
+            line-height: 1.5;
+            transition: color 0.2s;
+        }
+
+        .option-group a:hover {
+            color: #d9381e;
+        }
+
+        .close-options {
+            position: absolute;
+            top: 30px;
+            right: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
         }
 
         /* Hero Section */
@@ -240,57 +287,13 @@
             .hero, .details-section, .portfolio, footer {
                 padding: 40px 20px;
             }
-        /* Panel Dropdown Options dari Atas */
-        .options-panel {
-            position: fixed;
-            top: -100%; /* Sembunyikan di atas layar secara default */
-            left: 0;
-            width: 100%;
-            background-color: #f4f4f4; /* Warna putih sedikit abu */
-            color: #111111;
-            padding: 50px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: top 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-            z-index: 999; /* Berada di bawah header (z-index 1000) */
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-        }
-
-        .options-panel.active {
-            top: 0; /* Muncul menutupi bagian atas saat aktif */
-        }
-
-        .option-group h4 {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #666;
-            margin-bottom: 12px;
-        }
-
-        .option-group p, .option-group a {
-            font-size: 16px;
-            color: #111;
-            text-decoration: none;
-            line-height: 1.5;
-            transition: color 0.2s;
-        }
-
-        .option-group a:hover {
-            color: #d9381e;
-        }
-
-        .close-options {
-            position: absolute;
-            top: 30px;
-            right: 50px;
-            cursor: pointer;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-        }
+            .options-panel {
+                padding: 40px 20px;
+            }
+            .close-options {
+                right: 20px;
+                top: 20px;
+            }
         }
     </style>
 </head>
@@ -306,10 +309,27 @@
         <div class="header-center">
             <span>Bali Indonesia</span>
         </div>
-        <div class="header-right">
+        <div class="header-right" id="optionsBtn">
             <span>Options *</span>
         </div>
     </header>
+
+    <!-- Dropdown Options Panel (Turun dari Atas) -->
+    <div class="options-panel" id="optionsPanel">
+        <div class="close-options" id="closeOptionsBtn">Close [X]</div>
+        <div class="option-group">
+            <h4>Contact</h4>
+            <p><a href="mailto:studiocreative.meai@gmail.com">studiocreative.meai@gmail.com</a></p>
+        </div>
+        <div class="option-group">
+            <h4>Location</h4>
+            <p><a href="https://maps.google.com/?q=jalan+gatsu+timur+88x,+kesiman+petilan,+denpasar+timur,+kota+denpasar,+bali,+80237" target="_blank">Jalan Gatsu Timur 88X, Kesiman Petilan, Denpasar Timur, Kota Denpasar, Bali, 80237</a></p>
+        </div>
+        <div class="option-group">
+            <h4>Instagram</h4>
+            <p><a href="https://instagram.com/meai.studio" target="_blank">@meai.studio</a></p>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -382,5 +402,19 @@
         </div>
     </footer>
 
+    <!-- Script interaksi panel options -->
+    <script>
+        const optionsBtn = document.getElementById("optionsBtn");
+        const optionsPanel = document.getElementById("optionsPanel");
+        const closeOptionsBtn = document.getElementById("closeOptionsBtn");
+
+        optionsBtn.addEventListener("click", () => {
+            optionsPanel.classList.add("active");
+        });
+
+        closeOptionsBtn.addEventListener("click", () => {
+            optionsPanel.classList.remove("active");
+        });
+    </script>
 </body>
 </html>
