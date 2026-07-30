@@ -200,7 +200,7 @@
         .portfolio {
             padding: 100px 50px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative; /* Penting untuk posisi tombol absolute di HP */
+            position: relative;
         }
 
         .portfolio-header {
@@ -273,20 +273,20 @@
         }
 
         /* Tombol Navigasi Portofolio (Hanya muncul di HP) */
-        portfolio-nav-btns {
+        .portfolio-nav-btns {
             display: none;
             justify-content: space-between;
             width: 100%;
             position: absolute;
-            top: 50%;
+            top: 55%;
             left: 0;
             transform: translateY(-50%);
-            padding: 0 10px; /* Jarak dari tepi layar HP */
-            pointer-events: none; /* Agar area tengah tetap bisa disentuh */
+            padding: 0;
+            pointer-events: none;
         }
 
         .port-btn {
-            background: rgba(13, 13, 13, 0.8);
+            background: rgba(13, 13, 13, 0.85);
             color: #ffffff;
             border: 1px solid rgba(255, 255, 255, 0.2);
             width: 45px;
@@ -297,10 +297,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            pointer-events: auto; /* Mengaktifkan klik pada tombol */
+            pointer-events: auto;
             backdrop-filter: blur(4px);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             transition: background 0.2s;
+        }
+
+        #slideLeft {
+            margin-left: 5px;
+        }
+
+        #slideRight {
+            margin-right: 5px;
         }
 
         .port-btn:active {
@@ -436,47 +444,47 @@
             <h2>Portfolio</h2>
         </div>
         <div class="portfolio-grid" id="portfolioGrid">
-                <div class="portfolio-item">
+            <div class="portfolio-item">
                 <div class="category">Projection Mapping</div>
                 <h4>Pottato Head</h4>
             </div>
-                <div class="portfolio-item">
+            <div class="portfolio-item">
                 <div class="category">Projection Mapping</div>
                 <h4>Sudamala Resort</h4>
             </div>
-                <div class="portfolio-item">
+            <div class="portfolio-item">
                 <div class="category">Projection Mapping</div>
                 <h4>Club House CUSTOMWAR 2025</h4>
             </div>
-                <div class="portfolio-item">
+            <div class="portfolio-item">
                 <div class="category">Projection Mapping</div>
                 <h4>Analogue Listening Space</h4>
             </div>
-                <div class="portfolio-item">
+            <div class="portfolio-item">
                 <div class="category">Lighting Design</div>
                 <h4>DUNIA Ulu Cliffhouse</h4>
             </div>
-                <div class="portfolio-item">
+            <div class="portfolio-item">
                 <div class="category">Lighting Design</div>
                 <h4>DATs Event</h4>
             </div>
-                <div class="portfolio-item">
+            <div class="portfolio-item">
                 <div class="category">Interactive Installation</div>
                 <h4>MissFish</h4>
             </div>
-                <div class="portfolio-item">
+            <div class="portfolio-item">
                 <div class="category">Projection Mapping</div>
                 <h4>Road To AXEAN Fest The Craft Ubud Hotel</h4>
             </div>
-                <div class="portfolio-item">
+            <div class="portfolio-item">
                 <div class="category">Projection Mapping</div>
                 <h4>NOEMA Resort</h4>
             </div>
         </div>
-        <!-- Tombol Panah Navigasi HP -->
+        <!-- Tombol Panah Navigasi HP di Tepi Layar -->
         <div class="portfolio-nav-btns">
-            <button class="port-btn" id="slideLeft">←</button>
-            <button class="port-btn" id="slideRight">→</button>
+            <button class="port-btn" id="slideLeft">‹</button>
+            <button class="port-btn" id="slideRight">›</button>
         </div>
     </section>
 
