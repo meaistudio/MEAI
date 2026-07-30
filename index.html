@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Studio — © / Portfolio</title>
+    
+    <!-- Favicon menggunakan logo -->
+    <link rel="icon" type="image/png" href="asset/logo/meai.png">
+
     <style>
         * {
             margin: 0;
@@ -31,7 +35,15 @@
 
         .header-left, .header-center, .header-right {
             display: flex;
-            gap: 20px;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Styling Aksen Logo pada Header */
+        .brand-logo {
+            height: 28px;
+            width: auto;
+            object-fit: contain;
         }
 
         .header-center {
@@ -225,6 +237,8 @@
     <!-- Header Navigation -->
     <header>
         <div class="header-left">
+            <!-- Aksen Logo pada Header -->
+            <img src="asset/logo/meai.png" alt="Meai Studio Logo" class="brand-logo">
             <span>MEAI Studio — ©</span>
         </div>
         <div class="header-center">
