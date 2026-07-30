@@ -61,7 +61,7 @@
             user-select: none;
         }
 
-        /* Panel Dropdown Options dari Atas (Global untuk Desktop & Mobile) */
+        /* Panel Dropdown Options (Urut ke bawah secara vertikal) */
         .options-panel {
             position: fixed;
             top: -100%;
@@ -73,9 +73,9 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transition: top 0.4s cubic-bezier(0.77, 0, 0.175, 1);
             z-index: 999;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
 
         .options-panel.active {
@@ -87,7 +87,7 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: #666;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .option-group p, .option-group a {
@@ -314,7 +314,7 @@
         </div>
     </header>
 
-    <!-- Dropdown Options Panel (Turun dari Atas) -->
+    <!-- Dropdown Options Panel (Turun dari Atas secara Vertikal) -->
     <div class="options-panel" id="optionsPanel">
         <div class="close-options" id="closeOptionsBtn">Close [X]</div>
         <div class="option-group">
@@ -322,8 +322,8 @@
             <p><a href="mailto:studiocreative.meai@gmail.com">studiocreative.meai@gmail.com</a></p>
         </div>
         <div class="option-group">
-            <h4>Location</h4>
-            <p><a href="https://maps.google.com/?q=jalan+gatsu+timur+88x,+kesiman+petilan,+denpasar+timur,+kota+denpasar,+bali,+80237" target="_blank">Jalan Gatsu Timur 88X, Kesiman Petilan, Denpasar Timur, Kota Denpasar, Bali, 80237</a></p>
+            <h4>Address</h4>
+            <p><a href="https://maps.app.goo.gl/g8jC9vSsXfaSZgRu5" target="_blank">Jalan Gatsu Timur 88X, Kesiman Petilan, Denpasar Timur, Kota Denpasar, Bali, 80237</a></p>
         </div>
         <div class="option-group">
             <h4>Instagram</h4>
@@ -402,16 +402,18 @@
         </div>
     </footer>
 
-    <!-- Script interaksi panel options -->
+    <!-- Script Interaksi Toggle Options -->
     <script>
         const optionsBtn = document.getElementById("optionsBtn");
         const optionsPanel = document.getElementById("optionsPanel");
         const closeOptionsBtn = document.getElementById("closeOptionsBtn");
 
+        // Toggle panel ketika tombol Options diklik (buka/tutup bergantian)
         optionsBtn.addEventListener("click", () => {
-            optionsPanel.classList.add("active");
+            optionsPanel.classList.toggle("active");
         });
 
+        // Menutup panel ketika tombol Close [X] diklik
         closeOptionsBtn.addEventListener("click", () => {
             optionsPanel.classList.remove("active");
         });
