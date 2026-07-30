@@ -374,14 +374,14 @@
 
         /* Responsif untuk layar kecil / HP */
         @media (max-width: 768px) {
-            . {
+            .hero {
                 grid-template-columns: 1fr;
                 min-height: auto;
             }
             header {
                 padding: 20px;
             }
-            ., .details-section, .portfolio, footer {
+            .hero, .details-section, .portfolio, footer {
                 padding: 40px 20px;
             }
             .options-panel {
@@ -433,16 +433,16 @@
         </div>
     </div>
 
-    <!--  Section dengan Background GIF -->
-    <section class="">
-        <div class="-left">
+    <!-- Hero Section dengan Background GIF -->
+    <section class="hero">
+        <div class="hero-left">
             <h1>MEAI<br>Creative<br>Studio</h1>
             <div class="tags">
                 <span class="tag">Visual Mapping</span>
                 <span class="tag">Lighting</span>
             </div>
         </div>
-        <div class="-right">
+        <div class="hero-right">
             <p>"Lighting up spaces with visuals, sound, and imagination."</p>
         </div>
     </section>
