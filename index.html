@@ -114,7 +114,7 @@
             font-weight: 700;
         }
 
-        /* Hero Section */
+        /* Hero Section dengan Background GIF 9:16 yang Diperbesar */
         .hero {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -123,6 +123,38 @@
             gap: 50px;
             align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            background-color: #080808;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            background: url('asset/bg.gif') no-repeat center center;
+            background-size: 120% auto;
+            filter: blur(8px);
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 2;
+        }
+
+        .hero-left, .hero-right {
+            position: relative;
+            z-index: 3;
         }
 
         .hero-left h1 {
@@ -342,14 +374,14 @@
 
         /* Responsif untuk layar kecil / HP */
         @media (max-width: 768px) {
-            .hero {
+            . {
                 grid-template-columns: 1fr;
                 min-height: auto;
             }
             header {
                 padding: 20px;
             }
-            .hero, .details-section, .portfolio, footer {
+            ., .details-section, .portfolio, footer {
                 padding: 40px 20px;
             }
             .options-panel {
@@ -401,16 +433,16 @@
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-left">
+    <!--  Section dengan Background GIF -->
+    <section class="">
+        <div class="-left">
             <h1>MEAI<br>Creative<br>Studio</h1>
             <div class="tags">
                 <span class="tag">Visual Mapping</span>
                 <span class="tag">Lighting</span>
             </div>
         </div>
-        <div class="hero-right">
+        <div class="-right">
             <p>"Lighting up spaces with visuals, sound, and imagination."</p>
         </div>
     </section>
@@ -425,16 +457,11 @@
             <h3>My Strengths</h3>
             <ul class="strengths-list">
                 <li>Projection Mapping</li>
-                <li>Projector Rentals</li>
-                <li>Projector Purchasing</li>
-                <li>Projector Setup</li>
-                <li>Lighting Rentals</li>
-                <li>Lighting Purchasing</li>
-                <li>Lighting Operation</li>
                 <li>Stage Design</li>
                 <li>Visual Assets</li>
-                <li>Visual Jokey</li>
                 <li>Interactive Installation</li>
+                <li>Visual Jokey</li>
+                <li>Lighting Operation</li>
             </ul>
         </div>
         <div class="details-col">
@@ -496,7 +523,7 @@
     <!-- Footer -->
     <footer>
         <div>
-            <p>© 2026 MEAI Studio. All rights reserved.</p>
+            <p>© 2026 Studio. All rights reserved.</p>
         </div>
     </footer>
 
