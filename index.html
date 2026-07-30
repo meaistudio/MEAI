@@ -14,7 +14,7 @@
         }
 
         body {
-            background: linear-gradient(to bottom, #222222, #000000);
+            background: linear-gradient(to bottom, #222222, #080808);
             color: #ffffff;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             overflow-x: hidden;
@@ -62,8 +62,7 @@
             user-select: none;
         }
 
-        /* Panel Dropdown Options (Urut ke bawah secara vertikal) */
-        /* Panel Dropdown Options (Diturunkan lebih ke bawah agar tidak tertutup header) */
+        /* Panel Dropdown Options */
         .options-panel {
             position: fixed;
             top: -100%;
@@ -71,7 +70,7 @@
             width: 100%;
             background-color: #f4f4f4;
             color: #111111;
-            padding: 120px 50px 60px 50px; /* Padding atas ditambah menjadi 120px */
+            padding: 120px 50px 60px 50px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transition: top 0.4s cubic-bezier(0.77, 0, 0.175, 1);
             z-index: 999;
@@ -106,7 +105,7 @@
 
         .close-options {
             position: absolute;
-            top: 30px;
+            top: 40px;
             right: 50px;
             cursor: pointer;
             font-size: 14px;
@@ -143,7 +142,7 @@
             border: 1px solid rgba(255, 255, 255, 0.4);
             padding: 8px 20px;
             border-radius: 30px;
-            font-size: 16px;
+            font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -197,7 +196,7 @@
             color: #ddd;
         }
 
-        /* Portfolio Grid Section - Geser ke Samping */
+        /* Portfolio Section - Geser ke Samping */
         .portfolio {
             padding: 100px 50px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -212,18 +211,16 @@
             text-transform: uppercase;
         }
 
-        /* Container Geser ke Samping */
         .portfolio-grid {
             display: flex;
             gap: 30px;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
-            padding-bottom: 20px; /* Jarak untuk scrollbar */
-            scrollbar-width: thin; /* Untuk Firefox */
+            padding-bottom: 20px;
+            scrollbar-width: thin;
             scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
         }
 
-        /* Styling scrollbar untuk Chrome/Safari/Edge */
         .portfolio-grid::-webkit-scrollbar {
             height: 6px;
         }
@@ -239,7 +236,7 @@
         }
 
         .portfolio-item {
-            flex: 0 0 350px; /* Lebar tetap setiap kartu portofolio */
+            flex: 0 0 350px;
             scroll-snap-align: start;
             background: #141414;
             padding: 40px;
@@ -273,13 +270,36 @@
             font-size: 1.8rem;
             font-weight: 700;
         }
+
+        /* Tombol Navigasi Portofolio (Hanya muncul di HP) */
+        .portfolio-nav-btns {
+            display: none;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .port-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s;
+        }
+
+        .port-btn:active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
         /* Footer */
         footer {
             padding: 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: #777;
             font-size: 14px;
         }
@@ -299,7 +319,6 @@
             color: #fff;
         }
 
-        /* Responsif untuk layar kecil */
         /* Responsif untuk layar kecil / HP */
         @media (max-width: 768px) {
             .hero {
@@ -312,13 +331,18 @@
             .hero, .details-section, .portfolio, footer {
                 padding: 40px 20px;
             }
-            /* Jarak atas pada panel options diperbesar khusus untuk HP */
             .options-panel {
-                padding: 120px 20px 40px 20px; 
+                padding: 110px 20px 40px 20px; 
             }
             .close-options {
                 right: 20px;
-                top: 35px;
+                top: 25px;
+            }
+            .portfolio-item {
+                flex: 0 0 280px;
+            }
+            .portfolio-nav-btns {
+                display: flex;
             }
         }
     </style>
@@ -328,7 +352,6 @@
     <!-- Header Navigation -->
     <header>
         <div class="header-left">
-            <!-- Aksen Logo pada Header -->
             <img src="asset/logo/meai" alt="Meai Studio Logo" class="brand-logo">
             <span>MEAI Studio</span>
         </div>
@@ -336,11 +359,11 @@
             <span>Bali Indonesia</span>
         </div>
         <div class="header-right" id="optionsBtn">
-            <span>Options</span>
+            <span>Options *</span>
         </div>
     </header>
 
-    <!-- Dropdown Options Panel (Turun dari Atas secara Vertikal) -->
+    <!-- Dropdown Options Panel -->
     <div class="options-panel" id="optionsPanel">
         <div class="close-options" id="closeOptionsBtn">Close [X]</div>
         <div class="option-group">
@@ -362,12 +385,12 @@
         <div class="hero-left">
             <h1>MEAI<br>Creative<br>Studio</h1>
             <div class="tags">
-                <span class="tag">Visual Mapping</span>
-                <span class="tag">Lighting</span>
+                <span class="tag">Modern</span>
+                <span class="tag">Unique</span>
             </div>
         </div>
         <div class="hero-right">
-            <p>"Lighting up spaces with visuals, sound, and imagination."</p>
+            <p>"A productive user experience requires comprehensive and consistent work. — We create client-tailored projects by seamlessly integrating projection mapping, interactive sensors, and dynamic lighting from our portfolio."</p>
         </div>
     </section>
 
@@ -378,19 +401,14 @@
             <p>As a digital creator, Meai Studio offers design services, visual mapping, and installation of new media art for corporations and individuals.</p>
         </div>
         <div class="details-col">
-            <h3>Our Strengths</h3>
+            <h3>My Strengths</h3>
             <ul class="strengths-list">
                 <li>Projection Mapping</li>
-                <li>Projector Rentals</li>
-                <li>Projector Purchasing</li>
-                <li>Projector Setup</li>
-                <li>Lighting Rentals</li>
-                <li>Lighting Purchasing</li>
-                <li>Lighting Operating</li>
-                <li>Visual Assets</li>
-                <li>Visual Jokey</li>
                 <li>Stage Design</li>
+                <li>Visual Assets</li>
                 <li>Interactive Installation</li>
+                <li>Visual Jokey</li>
+                <li>Lighting Operation</li>
             </ul>
         </div>
         <div class="details-col">
@@ -399,52 +417,32 @@
         </div>
     </section>
 
-    <!-- Portfolio Grid Section -->
+    <!-- Portfolio Section -->
     <section class="portfolio">
         <div class="portfolio-header">
             <h2>Portfolio</h2>
         </div>
-        <div class="portfolio-grid">
+        <div class="portfolio-grid" id="portfolioGrid">
             <div class="portfolio-item">
+                <span class="number">01</span>
                 <div class="category">Projection Mapping</div>
                 <h4>Pottato Head</h4>
             </div>
-                <div class="portfolio-item">
-                <div class="category">Projection Mapping</div>
-                <h4>Sudamala Resort</h4>
-            </div>
-                <div class="portfolio-item">
-                <div class="category">Projection Mapping</div>
-                <h4>Club House Custom War 2025</h4>
-            </div>
-                <div class="portfolio-item">
-                <div class="category">Projection Mapping</div>
-                <h4>Carnival LA FAVELA BALI</h4>
-            </div>
-                <div class="portfolio-item">
-                <div class="category">Projection Mapping</div>
-                <h4>Analogue Listening Space</h4>
-            </div>
-                <div class="portfolio-item">
-                <div class="category">Projection Mapping</div>
-                <h4>Road To AXEAN Festival</h4>
-            </div>
-                <div class="portfolio-item">
+            <div class="portfolio-item">
+                <span class="number">02</span>
                 <div class="category">Lighting Design</div>
                 <h4>DATs Event</h4>
             </div>
-                <div class="portfolio-item">
+            <div class="portfolio-item">
+                <span class="number">03</span>
                 <div class="category">Interactive Installation</div>
                 <h4>MissFish</h4>
             </div>
-                <div class="portfolio-item">
-                <div class="category">Projection Mapping</div>
-                <h4>Noema Resort</h4>
-            </div>
-                <div class="portfolio-item">
-                <div class="category">Projection Mapping</div>
-                <h4>Road To AXEAN Festival</h4>
-            </div>
+        </div>
+        <!-- Tombol Panah Navigasi HP -->
+        <div class="portfolio-nav-btns">
+            <button class="port-btn" id="slideLeft">←</button>
+            <button class="port-btn" id="slideRight">→</button>
         </div>
     </section>
 
@@ -453,22 +451,36 @@
         <div>
             <p>© 2026 Studio. All rights reserved.</p>
         </div>
+        <div class="socials">
+            <a href="#">Instagram</a>
+        </div>
     </footer>
 
-    <!-- Script Interaksi Toggle Options -->
+    <!-- Script Interaksi -->
     <script>
         const optionsBtn = document.getElementById("optionsBtn");
         const optionsPanel = document.getElementById("optionsPanel");
         const closeOptionsBtn = document.getElementById("closeOptionsBtn");
 
-        // Toggle panel ketika tombol Options diklik (buka/tutup bergantian)
         optionsBtn.addEventListener("click", () => {
             optionsPanel.classList.toggle("active");
         });
 
-        // Menutup panel ketika tombol Close [X] diklik
         closeOptionsBtn.addEventListener("click", () => {
             optionsPanel.classList.remove("active");
+        });
+
+        // Fungsi Tombol Geser Portofolio di HP
+        const portfolioGrid = document.getElementById("portfolioGrid");
+        const slideLeft = document.getElementById("slideLeft");
+        const slideRight = document.getElementById("slideRight");
+
+        slideLeft.addEventListener("click", () => {
+            portfolioGrid.scrollBy({ left: -300, behavior: 'smooth' });
+        });
+
+        slideRight.addEventListener("click", () => {
+            portfolioGrid.scrollBy({ left: 300, behavior: 'smooth' });
         });
     </script>
 </body>
