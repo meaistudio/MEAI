@@ -277,6 +277,7 @@
         }
 
         /* Responsif untuk layar kecil */
+        /* Responsif untuk layar kecil / HP */
         @media (max-width: 768px) {
             .hero {
                 grid-template-columns: 1fr;
@@ -288,12 +289,13 @@
             .hero, .details-section, .portfolio, footer {
                 padding: 40px 20px;
             }
+            /* Jarak atas pada panel options diperbesar khusus untuk HP */
             .options-panel {
-                padding: 40px 20px;
+                padding: 150px 20px 40px 20px; 
             }
             .close-options {
                 right: 20px;
-                top: 20px;
+                top: 35px;
             }
         }
     </style>
