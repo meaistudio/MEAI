@@ -197,13 +197,14 @@
             color: #ddd;
         }
 
-        /* Portfolio Grid Section */
+        /* Portfolio Grid Section - Geser ke Samping */
         .portfolio {
             padding: 100px 50px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .portfolio-header {
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         .portfolio-header h2 {
@@ -211,17 +212,39 @@
             text-transform: uppercase;
         }
 
+        /* Container Geser ke Samping */
         .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex;
             gap: 30px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 20px; /* Jarak untuk scrollbar */
+            scrollbar-width: thin; /* Untuk Firefox */
+            scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+        }
+
+        /* Styling scrollbar untuk Chrome/Safari/Edge */
+        .portfolio-grid::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .portfolio-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .portfolio-grid::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
         }
 
         .portfolio-item {
+            flex: 0 0 350px; /* Lebar tetap setiap kartu portofolio */
+            scroll-snap-align: start;
             background: #141414;
             padding: 40px;
             border-radius: 8px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease;
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
@@ -250,7 +273,6 @@
             font-size: 1.8rem;
             font-weight: 700;
         }
-
         /* Footer */
         footer {
             padding: 50px;
