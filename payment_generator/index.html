@@ -943,6 +943,7 @@
         const docNo = document.getElementById('inDocNo').value || '000';
         const date = document.getElementById('inDate').value;
         const clientName = document.getElementById('inClientName').value || '-';
+        const projectName = document.getElementById('inProject').value || '-';
         
         const grandTotalElement = document.getElementById('prevGrandTotal') || document.querySelector('.total-tr:last-child td:last-child');
         const grandTotal = grandTotalElement ? grandTotalElement.innerText : 'Rp 0';
@@ -952,16 +953,12 @@
             docNo: docNo,
             date: date,
             clientName: clientName,
+            projectName: projectName,
             grandTotal: grandTotal,
             status: docType === 'INVOICE' ? 'UNPAID' : 'QUOTED'
         };
 
-        const WEB_APP_URL = "MASUKKAN_URL_WEB_APP_ANDA_DISINI";
-
-        if (WEB_APP_URL.includes("MASUKKAN_URL")) {
-            alert("Harap masukkan URL Web App Google Apps Script terlebih dahulu!");
-            return;
-        }
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwGErHkF0VpJxtS3hFUCIiVqE-In5uII8PGNDWbUVBno_Lq5KFLiAUl4y6eeWu_2td8/exec";
 
         const btn = event.target;
         const originalText = btn.innerText;
