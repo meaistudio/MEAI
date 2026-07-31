@@ -294,11 +294,11 @@
             padding-bottom: 10px;
         }
 
-        /* Table Styling */
+        /* Table Styling (Border 1.5px) */
         .doc-table {
             width: 100%;
             border-collapse: collapse;
-            border: 2px solid #111827;
+            border: 1.5px solid #111827;
             margin-bottom: 10px;
         }
         .doc-table th {
@@ -308,13 +308,13 @@
             font-weight: 700;
             text-align: center;
             padding: 7px 6px;
-            border: 2px solid #111827;
+            border: 1.5px solid #111827;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .doc-table td {
             padding: 7px 6px;
-            border: 2px solid #111827;
+            border: 1.5px solid #111827;
             font-size: 10px;
             color: #111827;
         }
@@ -324,42 +324,44 @@
         .doc-table td.t-price { text-align: right; width: 110px; }
         .doc-table td.t-amount { text-align: right; width: 120px; }
         .doc-table tr.total-tr td {
-            border: 2px solid #111827;
+            border: 1.5px solid #111827;
             font-weight: 700;
             padding: 6px;
         }
 
+        /* Diperbesar dari sebelumnya */
         .payment-method-box {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
         .payment-method-box h4, .terms-box h4 {
-            font-size: 10px;
+            font-size: 11.5px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: #111827;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
         .payment-grid {
             display: grid;
-            grid-template-columns: 100px 1fr;
-            font-size: 9px;
+            grid-template-columns: 110px 1fr;
+            font-size: 11px;
             color: #111827;
-            line-height: 1.35;
+            line-height: 1.45;
         }
         .payment-label { font-weight: 600; }
+        
         .terms-box {
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
         .terms-box ul {
             list-style-type: disc;
-            padding-left: 15px;
+            padding-left: 16px;
         }
         .terms-box li {
-            font-size: 8.5px;
+            font-size: 10.5px;
             color: #111827;
-            line-height: 1.3;
-            margin-bottom: 1px;
+            line-height: 1.4;
+            margin-bottom: 2px;
         }
 
         /* Sheet Footer Section */
@@ -614,9 +616,9 @@
                             </tbody>
                             <tfoot id="prevTableFoot">
                                 <tr class="total-tr">
-                                    <td colspan="3" style="border: 2px solid #111827;"></td>
-                                    <td style="text-align: center; border: 2px solid #111827;">Total</td>
-                                    <td style="text-align: right; border: 2px solid #111827;" id="prevGrandTotal">Rp 0</td>
+                                    <td colspan="3" style="border: 1.5px solid #111827;"></td>
+                                    <td style="text-align: center; border: 1.5px solid #111827;">Total</td>
+                                    <td style="text-align: right; border: 1.5px solid #111827;" id="prevGrandTotal">Rp 0</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -875,37 +877,37 @@
             if (taxOption === 'yes') {
                 footHTML += `
                     <tr class="total-tr">
-                        <td colspan="3" style="border: 2px solid #111827;"></td>
-                        <td style="text-align: center; border: 2px solid #111827;">Subtotal</td>
-                        <td style="text-align: right; border: 2px solid #111827;">${formatRupiah(subTotal)}</td>
+                        <td colspan="3" style="border: 1.5px solid #111827;"></td>
+                        <td style="text-align: center; border: 1.5px solid #111827;">Subtotal</td>
+                        <td style="text-align: right; border: 1.5px solid #111827;">${formatRupiah(subTotal)}</td>
                     </tr>
                     <tr class="total-tr">
-                        <td colspan="3" style="border: 2px solid #111827;"></td>
-                        <td style="text-align: center; border: 2px solid #111827;">PPN (11%)</td>
-                        <td style="text-align: right; border: 2px solid #111827;">${formatRupiah(taxAmount)}</td>
+                        <td colspan="3" style="border: 1.5px solid #111827;"></td>
+                        <td style="text-align: center; border: 1.5px solid #111827;">PPN (11%)</td>
+                        <td style="text-align: right; border: 1.5px solid #111827;">${formatRupiah(taxAmount)}</td>
                     </tr>
                 `;
             }
 
             footHTML += `
                 <tr class="total-tr">
-                    <td colspan="3" style="border: 2px solid #111827;"></td>
-                    <td style="text-align: center; border: 2px solid #111827;">Total</td>
-                    <td style="text-align: right; border: 2px solid #111827;" id="prevGrandTotal">${formatRupiah(finalTotal)}</td>
+                    <td colspan="3" style="border: 1.5px solid #111827;"></td>
+                    <td style="text-align: center; border: 1.5px solid #111827;">Total</td>
+                    <td style="text-align: right; border: 1.5px solid #111827;" id="prevGrandTotal">${formatRupiah(finalTotal)}</td>
                 </tr>
             `;
 
             if (dpOption !== 'none') {
                 footHTML += `
                     <tr class="total-tr" style="color: #059669;">
-                        <td colspan="3" style="border: 2px solid #111827;"></td>
-                        <td style="text-align: center; border: 2px solid #111827;">${dpLabelText}</td>
-                        <td style="text-align: right; border: 2px solid #111827;">- ${formatRupiah(dpAmount)}</td>
+                        <td colspan="3" style="border: 1.5px solid #111827;"></td>
+                        <td style="text-align: center; border: 1.5px solid #111827;">${dpLabelText}</td>
+                        <td style="text-align: right; border: 1.5px solid #111827;">- ${formatRupiah(dpAmount)}</td>
                     </tr>
                     <tr class="total-tr">
-                        <td colspan="3" style="border: 2px solid #111827;"></td>
-                        <td style="text-align: center; border: 2px solid #111827;">Remaining Balance</td>
-                        <td style="text-align: right; border: 2px solid #111827;">${formatRupiah(remainingBalance)}</td>
+                        <td colspan="3" style="border: 1.5px solid #111827;"></td>
+                        <td style="text-align: center; border: 1.5px solid #111827;">Remaining Balance</td>
+                        <td style="text-align: right; border: 1.5px solid #111827;">${formatRupiah(remainingBalance)}</td>
                     </tr>
                 `;
             }
