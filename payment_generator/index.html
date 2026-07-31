@@ -536,6 +536,18 @@
 
         <div class="form-grid">
             <div class="form-group">
+                <label>Opsi Down Payment (DP)</label>
+                <select id="inDpOption" onchange="toggleDpInput()">
+                    <option value="none">Tanpa DP (Full Payment)</option>
+                    <option value="50">DP 50%</option>
+                    <option value="custom">DP Nominal Lain</option>
+                </select>
+            </div>
+            <div class="form-group" id="customDpGroup" style="display: none;">
+                <label>Nominal DP (Rp)</label>
+                <input type="number" id="inCustomDp" value="0" placeholder="Contoh: 500000" oninput="updatePreview()">
+            </div>
+            <div class="form-group">
                 <label>Client Name</label>
                 <input type="text" id="inClientName" placeholder="client name" oninput="updatePreview()">
             </div>
@@ -586,7 +598,7 @@
         </div>
     </div>
 
-    <!-- DOCUMENT PREVIEW SHEET (A4 Size dengan Scroll Horizontal untuk HP) -->
+    <!-- DOCUMENT PREVIEW SHEET -->
     <div class="document-preview-scroll">
         <div class="document-container">
             <div class="letter-sheet">
@@ -641,9 +653,7 @@
                     </table>
 
                     <!-- Dynamic Bottom Section (Payment Method & Terms) -->
-                    <div id="dynamicBottomSection">
-                        <!-- Dinamis berdasarkan apakah ini INVOICE atau QUOTATION -->
-                    </div>
+                    <div id="dynamicBottomSection"></div>
                 </div>
 
                 <!-- Footer -->
@@ -679,13 +689,11 @@
 </div>
 
 <script>
-    // Fungsi untuk mengisi tanggal hari ini secara otomatis dalam format DD/MM/YYYY
     function setTodayDate() {
         const today = new Date();
         const day = String(today.getDate()).padStart(2, '0');
         const month = String(today.getMonth() + 1).padStart(2, '0');
         const year = today.getFullYear();
-        
         document.getElementById('inDate').value = `${day}/${month}/${year}`;
     }
 
@@ -720,6 +728,17 @@
         updatePreview();
     }
 
+    function toggleDpInput() {
+        const dpOption = document.getElementById('inDpOption').value;
+        const customGroup = document.getElementById('customDpGroup');
+        if (dpOption === 'custom') {
+            customGroup.style.display = 'flex';
+        } else {
+            customGroup.style.display = 'none';
+        }
+        updatePreview();
+    }
+
     function updatePreview() {
         const docType = document.getElementById('inDocType').value;
         
@@ -750,7 +769,6 @@
         }
         document.getElementById('prevContactDetails').innerText = contactCombined !== '' ? contactCombined : '-';
 
-        // Proses Item & Perhitungan Subtotal / Total
         const descs = document.querySelectorAll('.item-desc');
         const qtys = document.querySelectorAll('.item-qty');
         const prices = document.querySelectorAll('.item-price');
@@ -778,15 +796,30 @@
             prevTbody.appendChild(tr);
         }
 
-        // Cek Opsi Pajak
         const taxOption = document.getElementById('inTaxOption').value;
+        const dpOption = document.getElementById('inDpOption').value;
         const prevTableFoot = document.getElementById('prevTableFoot');
 
-        if (taxOption === 'yes') {
-            const taxAmount = subTotal * 0.11;
-            const grandTotal = subTotal + taxAmount;
+        let finalTotal = subTotal;
+        let taxAmount = 0;
 
-            prevTableFoot.innerHTML = `
+        if (taxOption === 'yes') {
+            taxAmount = subTotal * 0.11;
+            finalTotal = subTotal + taxAmount;
+        }
+
+        let dpAmount = 0;
+        if (dpOption === '50') {
+            dpAmount = finalTotal * 0.5;
+        } else if (dpOption === 'custom') {
+            dpAmount = parseFloat(document.getElementById('inCustomDp').value) || 0;
+        }
+
+        let remainingBalance = finalTotal - dpAmount;
+
+        let footHTML = '';
+        if (taxOption === 'yes') {
+            footHTML += `
                 <tr class="total-tr">
                     <td colspan="3" style="border: 2px solid #111827;"></td>
                     <td style="text-align: center; border: 2px solid #111827;">Subtotal</td>
@@ -797,25 +830,35 @@
                     <td style="text-align: center; border: 2px solid #111827;">PPN (11%)</td>
                     <td style="text-align: right; border: 2px solid #111827;">${formatRupiah(taxAmount)}</td>
                 </tr>
-                <tr class="total-tr">
-                    <td colspan="3" style="border: 2px solid #111827;"></td>
-                    <td style="text-align: center; border: 2px solid #111827;">Total</td>
-                    <td style="text-align: right; border: 2px solid #111827;">${formatRupiah(grandTotal)}</td>
-                </tr>
             `;
-        } else {
-            prevTableFoot.innerHTML = `
+        }
+
+        footHTML += `
+            <tr class="total-tr">
+                <td colspan="3" style="border: 2px solid #111827;"></td>
+                <td style="text-align: center; border: 2px solid #111827;">Total</td>
+                <td style="text-align: right; border: 2px solid #111827;" id="prevGrandTotal">${formatRupiah(finalTotal)}</td>
+            </tr>
+        `;
+
+        if (dpOption !== 'none') {
+            footHTML += `
+                <tr class="total-tr" style="color: #059669;">
+                    <td colspan="3" style="border: 2px solid #111827;"></td>
+                    <td style="text-align: center; border: 2px solid #111827;">Down Payment (DP)</td>
+                    <td style="text-align: right; border: 2px solid #111827;">- ${formatRupiah(dpAmount)}</td>
+                </tr>
                 <tr class="total-tr">
                     <td colspan="3" style="border: 2px solid #111827;"></td>
-                    <td style="text-align: center; border: 2px solid #111827;">Total</td>
-                    <td style="text-align: right; border: 2px solid #111827;" id="prevGrandTotal">${formatRupiah(subTotal)}</td>
+                    <td style="text-align: center; border: 2px solid #111827;">Sisa Pelunasan</td>
+                    <td style="text-align: right; border: 2px solid #111827;">${formatRupiah(remainingBalance)}</td>
                 </tr>
             `;
         }
 
-        // Render T&C / Payment Method Berdasarkan Jenis Dokumen (INVOICE / QUOTATION)
+        prevTableFoot.innerHTML = footHTML;
+
         const bottomSection = document.getElementById('dynamicBottomSection');
-        
         let taxTextItem = (taxOption === 'yes') ? '<li>Tax included (PPN 11%)</li>' : '<li>Tax excluded</li>';
 
         if (docType === 'INVOICE') {
