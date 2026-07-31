@@ -72,6 +72,7 @@
             border-radius: 6px;
             font-family: 'Montserrat', sans-serif;
             font-size: 13px;
+            width: 100%;
         }
 
         .form-group input::placeholder, 
@@ -103,11 +104,19 @@
         .btn-success { background-color: #059669; color: white; font-size: 14px; padding: 10px 24px; }
         .btn-success:hover { background-color: #047857; }
         .btn-danger { background-color: #ef4444; color: white; padding: 6px 10px; font-size: 11px; }
+        .btn-archive { background-color: #2563eb; color: white; }
+        .btn-archive:hover { background-color: #1d4ed8; }
 
         .btn-group {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
             margin-top: 15px;
+        }
+
+        .table-responsive-container {
+            width: 100%;
+            overflow-x: auto;
         }
 
         .input-table {
@@ -115,6 +124,7 @@
             border-collapse: collapse;
             margin-top: 10px;
             margin-bottom: 15px;
+            min-width: 400px;
         }
 
         .input-table th, .input-table td {
@@ -129,7 +139,15 @@
             font-weight: 600;
         }
 
-        /* EXACT A4 SIZE & PREVIEW CONTAINER */
+        /* PREVIEW CONTAINER & SCROLLABLE WRAPPER FOR MOBILE */
+        .document-preview-scroll {
+            width: 100%;
+            overflow-x: auto;
+            background: #d1d5db;
+            padding: 10px 0;
+            border-radius: 8px;
+        }
+
         .document-container {
             background: white;
             width: 210mm;
@@ -427,18 +445,41 @@
             text-align: right;
             margin-top: 8px;
             line-height: 1.5;
-            width: 380px;        /* Memperbesar lebar area teks alamat */
+            width: 380px;
             margin-left: -200px;   
-            margin-right: 0px; /* Menggeser posisi keseluruhan teks lebih jauh ke kanan */
+            margin-right: 0px;
         }      
 
-        /* Print Settings for A4 */
+        /* RESPONSIVE DESIGN UNTUK LAYAR HP (MOBILE) */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .control-panel {
+                padding: 15px;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .btn-group {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+            .document-preview-scroll {
+                border: 1px solid #cbd5e1;
+            }
+        }
+
+        /* Print Settings untuk A4 */
         @media print {
             body {
                 background: white;
                 padding: 0;
             }
-            .control-panel, .no-print {
+            .control-panel, .no-print, .document-preview-scroll {
                 display: none !important;
             }
             .document-container {
@@ -510,124 +551,128 @@
                 <label>Project Name</label>
                 <input type="text" id="inProject" placeholder="project name" oninput="updatePreview()">
             </div>
-            <div class="form-group" style="grid-column: span 2;">
+            <div class="form-group" style="grid-column: span 1;">
                 <label>Address</label>
                 <textarea id="inClientAddress" rows="2" placeholder="address" oninput="updatePreview()" style="resize:vertical;"></textarea>
             </div>
         </div>
 
         <h2 style="margin-top: 20px;">Daftar Item / Itemized List</h2>
-        <table class="input-table">
-            <thead>
-                <tr>
-                    <th>Deskripsi</th>
-                    <th style="width: 70px;">Qty</th>
-                    <th style="width: 130px;">Harga (Rp)</th>
-                    <th style="width: 50px;">Aksi</th>
-                </tr>
-            </thead>
-            <tbody id="inputRowsContainer">
-                <tr>
-                    <td><input type="text" class="item-desc" placeholder="new item" oninput="updatePreview()"></td>
-                    <td><input type="number" class="item-qty" value="1" min="1" oninput="updatePreview()"></td>
-                    <td><input type="number" class="item-price" value="0" oninput="updatePreview()"></td>
-                    <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">X</button></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive-container">
+            <table class="input-table">
+                <thead>
+                    <tr>
+                        <th>Deskripsi</th>
+                        <th style="width: 70px;">Qty</th>
+                        <th style="width: 130px;">Harga (Rp)</th>
+                        <th style="width: 50px;">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="inputRowsContainer">
+                    <tr>
+                        <td><input type="text" class="item-desc" placeholder="new item" oninput="updatePreview()"></td>
+                        <td><input type="number" class="item-qty" value="1" min="1" oninput="updatePreview()"></td>
+                        <td><input type="number" class="item-price" value="0" oninput="updatePreview()"></td>
+                        <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">X</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <div class="btn-group">
             <button type="button" class="btn btn-primary" onclick="addRow()">+ Tambah Item</button>
-            <div style="flex-grow: 1;"></div>
+            <button type="button" class="btn btn-archive" onclick="saveToArchive()">📁 Simpan ke Arsip</button>
             <button type="button" class="btn btn-success" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
         </div>
     </div>
 
-    <!-- DOCUMENT PREVIEW SHEET (A4 Size) -->
-    <div class="document-container">
-        <div class="letter-sheet">
-            
-            <!-- Full-Width Black Translucent Glassmorphism Top Bar -->
-            <div class="top-bar-box">
-                <div class="page-main-title" id="prevMainTitle">QUOTATION</div>
-                <div class="brand-header-right">
-                    <div class="brand-name">MEAI STUDIO</div>
-                    <img src="asset/meai.png" alt="Logo Meai" class="brand-logo-img" onerror="this.style.display='none'">
-                </div>
-            </div>
-
-            <div class="sheet-body">
-                <!-- Header Info -->
-                <div class="header-info-box">
-                    <div class="recipient-col">
-                        <h3 id="prevRecipientTitle">QUOTATION TO</h3>
-                        <div class="recipient-name" id="prevClientName">-</div>
-                        <div class="recipient-detail" id="prevContactDetails" style="white-space: pre-line; margin-bottom: 3px;">-</div>
-                        <div class="recipient-detail" id="prevClientAddress">-</div>
-                    </div>
-                    <div class="meta-col">
-                        <div class="meta-doc-title" id="prevDocNo">QUOTATION NO. 000</div>
-                        <div class="meta-date">Date : <span id="prevDate">-</span></div>
-                        <div class="meta-project-title">PROJECT</div>
-                        <div class="meta-project-val" id="prevProject">-</div>
+    <!-- DOCUMENT PREVIEW SHEET (A4 Size dengan Scroll Horizontal untuk HP) -->
+    <div class="document-preview-scroll">
+        <div class="document-container">
+            <div class="letter-sheet">
+                
+                <!-- Full-Width Black Translucent Glassmorphism Top Bar -->
+                <div class="top-bar-box">
+                    <div class="page-main-title" id="prevMainTitle">QUOTATION</div>
+                    <div class="brand-header-right">
+                        <div class="brand-name">MEAI STUDIO</div>
+                        <img src="asset/meai.png" alt="Logo Meai" class="brand-logo-img" onerror="this.style.display='none'">
                     </div>
                 </div>
 
-                <!-- Table -->
-                <table class="doc-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 45px;">NO</th>
-                            <th>Description</th>
-                            <th style="width: 55px;">QTY</th>
-                            <th style="width: 120px;">Price</th>
-                            <th style="width: 130px;">Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody id="prevTableRows">
-                        <!-- Dynamic rows -->
-                    </tbody>
-                    <tfoot id="prevTableFoot">
-                        <tr class="total-tr">
-                            <td colspan="3" style="border: 2px solid #111827;"></td>
-                            <td style="text-align: center; border: 2px solid #111827;">Total</td>
-                            <td style="text-align: right; border: 2px solid #111827;" id="prevGrandTotal">Rp 0</td>
-                        </tr>
-                    </tfoot>
-                </table>
-
-                <!-- Dynamic Bottom Section (Payment Method & Terms) -->
-                <div id="dynamicBottomSection">
-                    <!-- Dinamis berdasarkan apakah ini INVOICE atau QUOTATION -->
-                </div>
-            </div>
-
-            <!-- Footer -->
-            <div class="sheet-footer">
-                <div class="footer-flex">
-                    <div class="footer-left-col">
-                        <div class="thank-you-text">Thank you for purchase!</div>
-                        <div class="contact-info-block">
-                            <div class="contact-title">C O N T A C T</div>
-                            <div>studiocreative.meai@gmail.com</div>
-                            <div>+62881038177078</div>
+                <div class="sheet-body">
+                    <!-- Header Info -->
+                    <div class="header-info-box">
+                        <div class="recipient-col">
+                            <h3 id="prevRecipientTitle">QUOTATION TO</h3>
+                            <div class="recipient-name" id="prevClientName">-</div>
+                            <div class="recipient-detail" id="prevContactDetails" style="white-space: pre-line; margin-bottom: 3px;">-</div>
+                            <div class="recipient-detail" id="prevClientAddress">-</div>
+                        </div>
+                        <div class="meta-col">
+                            <div class="meta-doc-title" id="prevDocNo">QUOTATION NO. 000</div>
+                            <div class="meta-date">Date : <span id="prevDate">-</span></div>
+                            <div class="meta-project-title">PROJECT</div>
+                            <div class="meta-project-val" id="prevProject">-</div>
                         </div>
                     </div>
-                    <div class="signature-box">
-                        <div class="sig-space">
-                            <img src="asset/ttd.png" alt="Signature" class="sig-img" onerror="this.style.display='none'; document.getElementById('fallbackSig').style.display='block';">
-                            <div id="fallbackSig" style="font-family: 'Brush Script MT', cursive, sans-serif; font-size: 22px; color: #111827; transform: rotate(-4deg); display: none;">Dian Yuniastu</div>
+
+                    <!-- Table -->
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 45px;">NO</th>
+                                <th>Description</th>
+                                <th style="width: 55px;">QTY</th>
+                                <th style="width: 120px;">Price</th>
+                                <th style="width: 130px;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="prevTableRows">
+                            <!-- Dynamic rows -->
+                        </tbody>
+                        <tfoot id="prevTableFoot">
+                            <tr class="total-tr">
+                                <td colspan="3" style="border: 2px solid #111827;"></td>
+                                <td style="text-align: center; border: 2px solid #111827;">Total</td>
+                                <td style="text-align: right; border: 2px solid #111827;" id="prevGrandTotal">Rp 0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <!-- Dynamic Bottom Section (Payment Method & Terms) -->
+                    <div id="dynamicBottomSection">
+                        <!-- Dinamis berdasarkan apakah ini INVOICE atau QUOTATION -->
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="sheet-footer">
+                    <div class="footer-flex">
+                        <div class="footer-left-col">
+                            <div class="thank-you-text">Thank you for purchase!</div>
+                            <div class="contact-info-block">
+                                <div class="contact-title">C O N T A C T</div>
+                                <div>studiocreative.meai@gmail.com</div>
+                                <div>+62881038177078</div>
+                            </div>
                         </div>
-                        <div class="sig-name">DIAN YUNIASTU</div>
-                        <div class="company-footer-address">
-                            MEAI STUDIO<br>
-                            Jl. Gatot Subroto Tim. No.88x, Kesiman Petilan, Kec.<br>
-                            Denpasar Tim., Kota Denpasar, Bali 80234
+                        <div class="signature-box">
+                            <div class="sig-space">
+                                <img src="asset/ttd.png" alt="Signature" class="sig-img" onerror="this.style.display='none'; document.getElementById('fallbackSig').style.display='block';">
+                                <div id="fallbackSig" style="font-family: 'Brush Script MT', cursive, sans-serif; font-size: 22px; color: #111827; transform: rotate(-4deg); display: none;">Dian Yuniastu</div>
+                            </div>
+                            <div class="sig-name">DIAN YUNIASTU</div>
+                            <div class="company-footer-address">
+                                MEAI STUDIO<br>
+                                Jl. Gatot Subroto Tim. No.88x, Kesiman Petilan, Kec.<br>
+                                Denpasar Tim., Kota Denpasar, Bali 80234
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
 
@@ -808,6 +853,57 @@
                 </div>
             `;
         }
+    }
+
+    function saveToArchive() {
+        const docType = document.getElementById('inDocType').value;
+        const docNo = document.getElementById('inDocNo').value || '000';
+        const date = document.getElementById('inDate').value;
+        const clientName = document.getElementById('inClientName').value || '-';
+        
+        const grandTotalElement = document.getElementById('prevGrandTotal') || document.querySelector('.total-tr:last-child td:last-child');
+        const grandTotal = grandTotalElement ? grandTotalElement.innerText : 'Rp 0';
+
+        const payload = {
+            docType: docType,
+            docNo: docNo,
+            date: date,
+            clientName: clientName,
+            grandTotal: grandTotal,
+            status: docType === 'INVOICE' ? 'UNPAID' : 'QUOTED'
+        };
+
+        const WEB_APP_URL = "MASUKKAN_URL_WEB_APP_ANDA_DISINI";
+
+        if (WEB_APP_URL.includes("MASUKKAN_URL")) {
+            alert("Harap masukkan URL Web App Google Apps Script terlebih dahulu!");
+            return;
+        }
+
+        const btn = event.target;
+        const originalText = btn.innerText;
+        btn.innerText = "Menyimpan...";
+        btn.disabled = true;
+
+        fetch(WEB_APP_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(() => {
+            alert("Berhasil menyimpan dokumen ke Arsip Google Sheets!");
+            btn.innerText = originalText;
+            btn.disabled = false;
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            alert("Gagal menyimpan ke arsip.");
+            btn.innerText = originalText;
+            btn.disabled = false;
+        });
     }
 
     window.onload = function() {
