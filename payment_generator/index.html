@@ -139,29 +139,30 @@
             font-weight: 600;
         }
 
-        /* PREVIEW CONTAINER & SCROLLABLE WRAPPER UNTUK MOBILE */
+        /* PREVIEW CONTAINER & SCROLLABLE WRAPPER */
         .document-preview-scroll {
             width: 100%;
             overflow-x: auto;
             background: #d1d5db;
-            padding: 10px 0;
+            padding: 20px 0;
             border-radius: 8px;
         }
 
         .document-container {
             background: white;
             width: 210mm;
-            min-height: 297mm;
+            height: 297mm;
             margin: 0 auto;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             border-radius: 4px;
             overflow: hidden;
+            position: relative;
         }
 
         .letter-sheet {
             position: relative;
             width: 210mm;
-            min-height: 297mm;
+            height: 297mm;
             background-image: url('asset/letter_bg.png');
             background-size: cover;
             background-position: center;
@@ -218,7 +219,7 @@
 
         /* Content Sections */
         .sheet-body {
-            padding: 0 45px 15px 45px;
+            padding: 0 45px 10px 45px;
             width: 100%;
         }
 
@@ -227,7 +228,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .recipient-col {
@@ -296,7 +297,7 @@
             width: 100%;
             border-collapse: collapse;
             border: 2px solid #111827;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .doc-table th {
@@ -305,51 +306,52 @@
             font-size: 11px;
             font-weight: 700;
             text-align: center;
-            padding: 7px 6px;
+            padding: 6px;
             border: 2px solid #111827;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .doc-table td {
-            padding: 7px 6px;
+            padding: 6px;
             border: 2px solid #111827;
-            font-size: 10.5px;
+            font-size: 10px;
             color: #111827;
         }
 
-        .doc-table td.t-no { text-align: center; width: 45px; font-weight: 600; }
+        .doc-table td.t-no { text-align: center; width: 40px; font-weight: 600; }
         .doc-table td.t-desc { text-align: left; }
-        .doc-table td.t-qty { text-align: center; width: 55px; }
-        .doc-table td.t-price { text-align: right; width: 120px; }
-        .doc-table td.t-amount { text-align: right; width: 130px; }
+        .doc-table td.t-qty { text-align: center; width: 50px; }
+        .doc-table td.t-price { text-align: right; width: 110px; }
+        .doc-table td.t-amount { text-align: right; width: 120px; }
 
         .doc-table tr.total-tr td {
             border: 2px solid #111827;
             font-weight: 700;
+            padding: 5px 6px;
         }
 
         /* Dynamic Payment Method & Terms Styles */
         .payment-method-box {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .payment-method-box h4,
         .terms-box h4 {
-            font-size: 10.5px;
+            font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: #111827;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
 
         .payment-grid {
             display: grid;
-            grid-template-columns: 110px 1fr;
-            font-size: 9.5px;
+            grid-template-columns: 100px 1fr;
+            font-size: 9px;
             color: #111827;
-            line-height: 1.4;
+            line-height: 1.35;
         }
 
         .payment-label {
@@ -362,19 +364,19 @@
 
         .terms-box ul {
             list-style-type: disc;
-            padding-left: 16px;
+            padding-left: 15px;
         }
 
         .terms-box li {
-            font-size: 9px;
+            font-size: 8.5px;
             color: #111827;
-            line-height: 1.35;
+            line-height: 1.3;
             margin-bottom: 1px;
         }
 
         /* Sheet Footer Section */
         .sheet-footer {
-            padding: 5px 45px 30px 45px;
+            padding: 0 45px 25px 45px;
             width: 100%;
             margin-top: auto;
         }
@@ -388,27 +390,27 @@
         .footer-left-col {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
             max-width: 55%;
         }
 
         .thank-you-text {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: #111827;
         }
 
         .contact-info-block {
-            font-size: 12px;
+            font-size: 11px;
             color: #111827;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         .contact-title {
             font-weight: 700;
             letter-spacing: 1px;
-            margin-bottom: 4px;
-            font-size: 12px;
+            margin-bottom: 2px;
+            font-size: 11px;
         }
 
         .signature-box {
@@ -417,20 +419,20 @@
         }
 
         .sig-space {
-            height: 65px;
+            height: 55px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .sig-img {
-            max-height: 148px;
-            max-width: 240px;
+            max-height: 120px;
+            max-width: 200px;
             object-fit: contain;
         }
 
         .sig-name {
-            font-size: 10.5px;
+            font-size: 10px;
             font-weight: 700;
             color: #111827;
             border-top: 1px solid #111827;
@@ -439,12 +441,12 @@
         }
 
         .company-footer-address {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 600;
             color: #111827;
             text-align: right;
-            margin-top: 8px;
-            line-height: 1.5;
+            margin-top: 6px;
+            line-height: 1.4;
             width: 380px;
             margin-left: -200px;   
             margin-right: 0px;
@@ -473,30 +475,19 @@
             }
         }
 
-        /* Print Settings untuk A4 */
+        /* PRINT STYLES - Warna background dipaksa muncul */
         @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            .control-panel, .no-print, .document-preview-scroll {
-                display: none !important;
-            }
-            .document-container {
-                box-shadow: none;
-                width: 100%;
-                max-width: 100%;
-                border-radius: 0;
-            }
-            .letter-sheet {
-                width: 100%;
-                min-height: 100vh;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
             @page {
-                size: A4;
-                margin: 0;
+                size: A4 portrait;
+                margin: 0 !important;
+            }
+            .document-container {
+                box-shadow: none !important;
+                margin: 0 !important;
             }
         }
     </style>
@@ -599,7 +590,8 @@
         <div class="btn-group">
             <button type="button" class="btn btn-primary" onclick="addRow()">+ Tambah Item</button>
             <button type="button" class="btn btn-archive" onclick="saveToArchive()">📁 Simpan ke Arsip</button>
-            <button type="button" class="btn btn-success" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+            <!-- Tombol Cetak telah diubah untuk menggunakan fungsi JavaScript khusus -->
+            <button type="button" class="btn btn-success" onclick="printDocument()">🖨️ Cetak / Simpan PDF</button>
         </div>
     </div>
 
@@ -638,11 +630,11 @@
                     <table class="doc-table">
                         <thead>
                             <tr>
-                                <th style="width: 45px;">NO</th>
+                                <th style="width: 40px;">NO</th>
                                 <th>Description</th>
-                                <th style="width: 55px;">QTY</th>
-                                <th style="width: 120px;">Price</th>
-                                <th style="width: 130px;">Amount</th>
+                                <th style="width: 50px;">QTY</th>
+                                <th style="width: 110px;">Price</th>
+                                <th style="width: 120px;">Amount</th>
                             </tr>
                         </thead>
                         <tbody id="prevTableRows">
@@ -675,7 +667,7 @@
                         <div class="signature-box">
                             <div class="sig-space">
                                 <img src="asset/ttd.png" alt="Signature" class="sig-img" onerror="this.style.display='none'; document.getElementById('fallbackSig').style.display='block';">
-                                <div id="fallbackSig" style="font-family: 'Brush Script MT', cursive, sans-serif; font-size: 22px; color: #111827; transform: rotate(-4deg); display: none;">Dian Yuniastu</div>
+                                <div id="fallbackSig" style="font-family: 'Brush Script MT', cursive, sans-serif; font-size: 20px; color: #111827; transform: rotate(-4deg); display: none;">Dian Yuniastu</div>
                             </div>
                             <div class="sig-name">DIAN YUNIASTU</div>
                             <div class="company-footer-address">
@@ -694,6 +686,37 @@
 </div>
 
 <script>
+    // --- FUNGSI PRINT ANTI PUTIH/BLANK ---
+    function printDocument() {
+        const controlPanel = document.querySelector('.control-panel');
+        const previewScroll = document.querySelector('.document-preview-scroll');
+        const docContainer = document.querySelector('.document-container');
+        
+        // 1. Keluarkan dokumen dari elemen scroll (penyebab halaman terpotong/putih)
+        document.body.appendChild(docContainer);
+        
+        // 2. Sembunyikan semua UI selain dokumen
+        controlPanel.style.display = 'none';
+        previewScroll.style.display = 'none';
+        
+        // 3. Reset background dan margin body sementara
+        const oldPadding = document.body.style.padding;
+        const oldBg = document.body.style.background;
+        document.body.style.padding = '0';
+        document.body.style.background = 'white';
+        
+        // 4. Panggil jendela print
+        window.print();
+        
+        // 5. Kembalikan semua ke posisi semula setelah selesai ngeprint
+        document.body.style.padding = oldPadding;
+        document.body.style.background = oldBg;
+        previewScroll.appendChild(docContainer);
+        controlPanel.style.display = 'block';
+        previewScroll.style.display = 'block';
+    }
+    // ------------------------------------
+
     function setTodayDate() {
         const today = new Date();
         const day = String(today.getDate()).padStart(2, '0');
