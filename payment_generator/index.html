@@ -139,7 +139,7 @@
             font-weight: 600;
         }
 
-        /* PREVIEW CONTAINER & SCROLLABLE WRAPPER FOR MOBILE */
+        /* PREVIEW CONTAINER & SCROLLABLE WRAPPER UNTUK MOBILE */
         .document-preview-scroll {
             width: 100%;
             overflow-x: auto;
@@ -539,13 +539,18 @@
                 <label>Opsi Down Payment (DP)</label>
                 <select id="inDpOption" onchange="toggleDpInput()">
                     <option value="none">Tanpa DP (Full Payment)</option>
-                    <option value="50">DP 50%</option>
-                    <option value="custom">DP Nominal Lain</option>
+                    <option value="25">DP 25%</option>
+                    <option value="30">DP 30%</option>
+                    <option value="40">DP 40%</option>
+                    <option value="50" selected>DP 50%</option>
+                    <option value="60">DP 60%</option>
+                    <option value="70">DP 70%</option>
+                    <option value="custom">DP Nominal Lain (Rupiah)</option>
                 </select>
             </div>
             <div class="form-group" id="customDpGroup" style="display: none;">
                 <label>Nominal DP (Rp)</label>
-                <input type="number" id="inCustomDp" value="0" placeholder="Contoh: 500000" oninput="updatePreview()">
+                <input type="text" id="inCustomDp" value="0" onfocus="handleFocus(this)" onblur="handleBlur(this)" oninput="formatCurrencyInput(this)" />
             </div>
             <div class="form-group">
                 <label>Client Name</label>
@@ -584,7 +589,7 @@
                     <tr>
                         <td><input type="text" class="item-desc" placeholder="new item" oninput="updatePreview()"></td>
                         <td><input type="number" class="item-qty" value="1" min="1" oninput="updatePreview()"></td>
-                        <td><input type="number" class="item-price" value="0" oninput="updatePreview()"></td>
+                        <td><input type="text" class="item-price" value="0" onfocus="handleFocus(this)" onblur="handleBlur(this)" oninput="formatCurrencyInput(this)"></td>
                         <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">X</button></td>
                     </tr>
                 </tbody>
@@ -701,13 +706,42 @@
         return 'Rp ' + val.toLocaleString('id-ID');
     }
 
+    function parseNumber(str) {
+        if (!str) return 0;
+        return parseFloat(str.toString().replace(/\./g, '')) || 0;
+    }
+
+    function handleFocus(input) {
+        if (input.value === "0") {
+            input.value = "";
+        }
+    }
+
+    function handleBlur(input) {
+        if (input.value.trim() === "") {
+            input.value = "0";
+        }
+    }
+
+    function formatCurrencyInput(input) {
+        let rawVal = input.value.replace(/\D/g, "");
+        if (rawVal === "") {
+            input.value = "";
+            updatePreview();
+            return;
+        }
+        let formatted = parseInt(rawVal, 10).toLocaleString('id-ID');
+        input.value = formatted;
+        updatePreview();
+    }
+
     function addRow() {
         const tbody = document.getElementById('inputRowsContainer');
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td><input type="text" class="item-desc" placeholder="new item" oninput="updatePreview()"></td>
             <td><input type="number" class="item-qty" value="1" min="1" oninput="updatePreview()"></td>
-            <td><input type="number" class="item-price" value="0" oninput="updatePreview()"></td>
+            <td><input type="text" class="item-price" value="0" onfocus="handleFocus(this)" onblur="handleBlur(this)" oninput="formatCurrencyInput(this)"></td>
             <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">X</button></td>
         `;
         tbody.appendChild(tr);
@@ -781,7 +815,7 @@
         for (let i = 0; i < descs.length; i++) {
             const desc = descs[i].value.trim() !== '' ? descs[i].value : (descs[i].placeholder || 'new item');
             const qty = parseFloat(qtys[i].value) || 0;
-            const price = parseFloat(prices[i].value) || 0;
+            const price = parseNumber(prices[i].value);
             const amount = qty * price;
             subTotal += amount;
 
@@ -809,10 +843,16 @@
         }
 
         let dpAmount = 0;
-        if (dpOption === '50') {
-            dpAmount = finalTotal * 0.5;
-        } else if (dpOption === 'custom') {
-            dpAmount = parseFloat(document.getElementById('inCustomDp').value) || 0;
+        let dpLabelText = "Down Payment (DP)";
+        
+        if (dpOption !== 'none') {
+            if (dpOption === 'custom') {
+                dpAmount = parseNumber(document.getElementById('inCustomDp').value);
+            } else {
+                let percent = parseFloat(dpOption);
+                dpAmount = finalTotal * (percent / 100);
+                dpLabelText = `Down Payment (DP ${percent}%)`;
+            }
         }
 
         let remainingBalance = finalTotal - dpAmount;
@@ -845,7 +885,7 @@
             footHTML += `
                 <tr class="total-tr" style="color: #059669;">
                     <td colspan="3" style="border: 2px solid #111827;"></td>
-                    <td style="text-align: center; border: 2px solid #111827;">Down Payment (DP)</td>
+                    <td style="text-align: center; border: 2px solid #111827;">${dpLabelText}</td>
                     <td style="text-align: right; border: 2px solid #111827;">- ${formatRupiah(dpAmount)}</td>
                 </tr>
                 <tr class="total-tr">
@@ -889,7 +929,7 @@
                     <h4>TERMS & CONDITIONS:</h4>
                     <ul>
                         <li>Additional fees will be charged for items that are excluded from the contract.</li>
-                        <li>A minimum deposit of 50% of the total payment is required to complete the service.</li>
+                        <li>A minimum deposit of the total payment is required to complete the service.</li>
                         <li>The final payment is due within 3 days after the service is completed or according to agreement.</li>
                         ${taxTextItem}
                     </ul>
