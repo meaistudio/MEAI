@@ -217,10 +217,18 @@
             -webkit-filter: invert(1);
         }
 
-        /* Content Sections */
+        /* Content Sections - PENGATURAN TATA LETAK AGAR PAYMENT & TNC MELEKET DI BAWAH */
         .sheet-body {
             padding: 0 45px 10px 45px;
             width: 100%;
+            flex: 1; /* Mengisi seluruh area tersisa */
+            display: flex;
+            flex-direction: column;
+        }
+
+        #dynamicBottomSection {
+            margin-top: auto; /* Mendorong section ini ke paling bawah dari sheet-body */
+            padding-bottom: 10px;
         }
 
         /* Header Info Layout */
@@ -378,7 +386,6 @@
         .sheet-footer {
             padding: 0 45px 25px 45px;
             width: 100%;
-            margin-top: auto;
         }
 
         .footer-flex {
@@ -648,7 +655,7 @@
                         </tfoot>
                     </table>
 
-                    <!-- Dynamic Bottom Section (Payment Method & Terms) -->
+                    <!-- Dynamic Bottom Section (Payment Method & Terms) -> Disematkan di bawah -->
                     <div id="dynamicBottomSection"></div>
                 </div>
 
@@ -692,17 +699,16 @@
         const docContainer = document.querySelector('.document-container');
         
         // --- MENGUBAH NAMA FILE PDF (Berdasarkan Title Web) ---
-        const originalTitle = document.title; // Simpan title asli
+        const originalTitle = document.title;
         const docNo = document.getElementById('inDocNo').value || '000';
         const docType = document.getElementById('inDocType').value;
         const clientName = document.getElementById('inClientName').value || 'Client';
         const projectName = document.getElementById('inProject').value || 'Project';
         
-        // Ubah title menjadi format: 001_INVOICE MEAI_NamaClient_NamaProject
+        // Format: 001_INVOICE MEAI_NamaClient_NamaProject
         document.title = `${docNo}_${docType} MEAI_${clientName}_${projectName}`;
-        // ------------------------------------------------------
 
-        // 1. Keluarkan dokumen dari elemen scroll (penyebab halaman terpotong/putih)
+        // 1. Keluarkan dokumen dari elemen scroll
         document.body.appendChild(docContainer);
         
         // 2. Sembunyikan semua UI selain dokumen
@@ -725,10 +731,9 @@
         controlPanel.style.display = 'block';
         previewScroll.style.display = 'block';
         
-        // --- KEMBALIKAN TITLE KE SEMULA ---
+        // Kembalikan title ke awal
         document.title = originalTitle;
     }
-    // ------------------------------------
 
     function setTodayDate() {
         const today = new Date();
