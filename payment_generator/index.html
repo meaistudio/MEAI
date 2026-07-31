@@ -172,19 +172,28 @@
             justify-content: flex-start;
         }
 
-        /* Top Header Full-Width Black Translucent Box */
+        /* Top Header Full-Width Translucent Box (LEBIH TRANSPARAN DAN MENUTUPI ALAMAT CLIENT) */
         .top-bar-box {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 16px 45px 18px 45px;
+            background: rgba(17, 24, 39, 0.55); /* Transparansi disesuaikan */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            margin: 0;
+            margin-bottom: 20px;
+        }
+
+        .top-bar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            padding: 14px 45px;
-            background: rgba(17, 24, 39, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin: 0;
-            margin-bottom: 15px;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .page-main-title {
@@ -217,26 +226,12 @@
             -webkit-filter: invert(1);
         }
 
-        /* Content Sections - PENGATURAN TATA LETAK AGAR PAYMENT & TNC MELEKET DI BAWAH */
-        .sheet-body {
-            padding: 0 45px 10px 45px;
-            width: 100%;
-            flex: 1; /* Mengisi seluruh area tersisa */
-            display: flex;
-            flex-direction: column;
-        }
-
-        #dynamicBottomSection {
-            margin-top: auto; /* Mendorong section ini ke paling bawah dari sheet-body */
-            padding-bottom: 10px;
-        }
-
-        /* Header Info Layout */
+        /* Header Info Layout (Didalam Box Transparan) */
         .header-info-box {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 12px;
+            width: 100%;
         }
 
         .recipient-col {
@@ -246,7 +241,7 @@
         .recipient-col h3 {
             font-size: 11px;
             font-weight: 700;
-            color: #111827;
+            color: #d1d5db;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 4px;
@@ -255,13 +250,13 @@
         .recipient-name {
             font-size: 13px;
             font-weight: 700;
-            color: #111827;
+            color: #ffffff;
             margin-bottom: 3px;
         }
 
         .recipient-detail {
             font-size: 10.5px;
-            color: #111827;
+            color: #f3f4f6;
             line-height: 1.4;
         }
 
@@ -273,7 +268,7 @@
         .meta-doc-title {
             font-size: 13px;
             font-weight: 700;
-            color: #111827;
+            color: #ffffff;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 3px;
@@ -281,14 +276,14 @@
 
         .meta-date {
             font-size: 10.5px;
-            color: #111827;
+            color: #f3f4f6;
             margin-bottom: 8px;
         }
 
         .meta-project-title {
             font-size: 10px;
             font-weight: 700;
-            color: #111827;
+            color: #d1d5db;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 2px;
@@ -296,15 +291,29 @@
 
         .meta-project-val {
             font-size: 10.5px;
-            color: #111827;
+            color: #ffffff;
             text-decoration: underline;
         }
 
-        /* Table Styling */
+        /* Content Sections */
+        .sheet-body {
+            padding: 0 45px 10px 45px;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #dynamicBottomSection {
+            margin-top: auto;
+            padding-bottom: 10px;
+        }
+
+        /* Table Styling - GARIS LEBIH TIPISTMU (1px) */
         .doc-table {
             width: 100%;
             border-collapse: collapse;
-            border: 2px solid #111827;
+            border: 1px solid #111827;
             margin-bottom: 10px;
         }
 
@@ -315,14 +324,14 @@
             font-weight: 700;
             text-align: center;
             padding: 6px;
-            border: 2px solid #111827;
+            border: 1px solid #111827;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .doc-table td {
             padding: 6px;
-            border: 2px solid #111827;
+            border: 1px solid #111827;
             font-size: 10px;
             color: #111827;
         }
@@ -334,7 +343,7 @@
         .doc-table td.t-amount { text-align: right; width: 120px; }
 
         .doc-table tr.total-tr td {
-            border: 2px solid #111827;
+            border: 1px solid #111827;
             font-weight: 700;
             padding: 5px 6px;
         }
@@ -482,7 +491,7 @@
             }
         }
 
-        /* PRINT STYLES - Warna background dipaksa muncul */
+        /* PRINT STYLES */
         @media print {
             * {
                 -webkit-print-color-adjust: exact !important;
@@ -606,17 +615,16 @@
         <div class="document-container">
             <div class="letter-sheet">
                 
-                <!-- Full-Width Black Translucent Glassmorphism Top Bar -->
+                <!-- Box Hitam Transparan Atas (Mencakup Judul Dokumen hingga Alamat Client) -->
                 <div class="top-bar-box">
-                    <div class="page-main-title" id="prevMainTitle">QUOTATION</div>
-                    <div class="brand-header-right">
-                        <div class="brand-name">MEAI STUDIO</div>
-                        <img src="asset/meai.png" alt="Logo Meai" class="brand-logo-img" onerror="this.style.display='none'">
+                    <div class="top-bar-header">
+                        <div class="page-main-title" id="prevMainTitle">QUOTATION</div>
+                        <div class="brand-header-right">
+                            <div class="brand-name">MEAI STUDIO</div>
+                            <img src="asset/meai.png" alt="Logo Meai" class="brand-logo-img" onerror="this.style.display='none'">
+                        </div>
                     </div>
-                </div>
-
-                <div class="sheet-body">
-                    <!-- Header Info -->
+                    
                     <div class="header-info-box">
                         <div class="recipient-col">
                             <h3 id="prevRecipientTitle">QUOTATION TO</h3>
@@ -631,7 +639,9 @@
                             <div class="meta-project-val" id="prevProject">-</div>
                         </div>
                     </div>
+                </div>
 
+                <div class="sheet-body">
                     <!-- Table -->
                     <table class="doc-table">
                         <thead>
@@ -648,14 +658,14 @@
                         </tbody>
                         <tfoot id="prevTableFoot">
                             <tr class="total-tr">
-                                <td colspan="3" style="border: 2px solid #111827;"></td>
-                                <td style="text-align: center; border: 2px solid #111827;">Total</td>
-                                <td style="text-align: right; border: 2px solid #111827;" id="prevGrandTotal">Rp 0</td>
+                                <td colspan="3" style="border: 1px solid #111827;"></td>
+                                <td style="text-align: center; border: 1px solid #111827;">Total</td>
+                                <td style="text-align: right; border: 1px solid #111827;" id="prevGrandTotal">Rp 0</td>
                             </tr>
                         </tfoot>
                     </table>
 
-                    <!-- Dynamic Bottom Section (Payment Method & Terms) -> Disematkan di bawah -->
+                    <!-- Dynamic Bottom Section (Payment Method & Terms) -->
                     <div id="dynamicBottomSection"></div>
                 </div>
 
@@ -698,7 +708,7 @@
         const previewScroll = document.querySelector('.document-preview-scroll');
         const docContainer = document.querySelector('.document-container');
         
-        // --- MENGUBAH NAMA FILE PDF (Berdasarkan Title Web) ---
+        // --- MENGUBAH NAMA FILE PDF ---
         const originalTitle = document.title;
         const docNo = document.getElementById('inDocNo').value || '000';
         const docType = document.getElementById('inDocType').value;
@@ -724,14 +734,13 @@
         // 4. Panggil jendela print
         window.print();
         
-        // 5. Kembalikan semua ke posisi semula setelah selesai ngeprint
+        // 5. Kembalikan semua ke posisi semula
         document.body.style.padding = oldPadding;
         document.body.style.background = oldBg;
         previewScroll.appendChild(docContainer);
         controlPanel.style.display = 'block';
         previewScroll.style.display = 'block';
         
-        // Kembalikan title ke awal
         document.title = originalTitle;
     }
 
@@ -902,37 +911,37 @@
         if (taxOption === 'yes') {
             footHTML += `
                 <tr class="total-tr">
-                    <td colspan="3" style="border: 2px solid #111827;"></td>
-                    <td style="text-align: center; border: 2px solid #111827;">Subtotal</td>
-                    <td style="text-align: right; border: 2px solid #111827;">${formatRupiah(subTotal)}</td>
+                    <td colspan="3" style="border: 1px solid #111827;"></td>
+                    <td style="text-align: center; border: 1px solid #111827;">Subtotal</td>
+                    <td style="text-align: right; border: 1px solid #111827;">${formatRupiah(subTotal)}</td>
                 </tr>
                 <tr class="total-tr">
-                    <td colspan="3" style="border: 2px solid #111827;"></td>
-                    <td style="text-align: center; border: 2px solid #111827;">PPN (11%)</td>
-                    <td style="text-align: right; border: 2px solid #111827;">${formatRupiah(taxAmount)}</td>
+                    <td colspan="3" style="border: 1px solid #111827;"></td>
+                    <td style="text-align: center; border: 1px solid #111827;">PPN (11%)</td>
+                    <td style="text-align: right; border: 1px solid #111827;">${formatRupiah(taxAmount)}</td>
                 </tr>
             `;
         }
 
         footHTML += `
             <tr class="total-tr">
-                <td colspan="3" style="border: 2px solid #111827;"></td>
-                <td style="text-align: center; border: 2px solid #111827;">Total</td>
-                <td style="text-align: right; border: 2px solid #111827;" id="prevGrandTotal">${formatRupiah(finalTotal)}</td>
+                <td colspan="3" style="border: 1px solid #111827;"></td>
+                <td style="text-align: center; border: 1px solid #111827;">Total</td>
+                <td style="text-align: right; border: 1px solid #111827;" id="prevGrandTotal">${formatRupiah(finalTotal)}</td>
             </tr>
         `;
 
         if (dpOption !== 'none') {
             footHTML += `
                 <tr class="total-tr" style="color: #059669;">
-                    <td colspan="3" style="border: 2px solid #111827;"></td>
-                    <td style="text-align: center; border: 2px solid #111827;">${dpLabelText}</td>
-                    <td style="text-align: right; border: 2px solid #111827;">- ${formatRupiah(dpAmount)}</td>
+                    <td colspan="3" style="border: 1px solid #111827;"></td>
+                    <td style="text-align: center; border: 1px solid #111827;">${dpLabelText}</td>
+                    <td style="text-align: right; border: 1px solid #111827;">- ${formatRupiah(dpAmount)}</td>
                 </tr>
                 <tr class="total-tr">
-                    <td colspan="3" style="border: 2px solid #111827;"></td>
-                    <td style="text-align: center; border: 2px solid #111827;">Remaining Balance</td>
-                    <td style="text-align: right; border: 2px solid #111827;">${formatRupiah(remainingBalance)}</td>
+                    <td colspan="3" style="border: 1px solid #111827;"></td>
+                    <td style="text-align: center; border: 1px solid #111827;">Remaining Balance</td>
+                    <td style="text-align: right; border: 1px solid #111827;">${formatRupiah(remainingBalance)}</td>
                 </tr>
             `;
         }
