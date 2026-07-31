@@ -84,20 +84,38 @@
             cursor: pointer;
             font-family: 'Montserrat', sans-serif;
             transition: background 0.2s;
+            white-space: nowrap;
         }
         .btn-primary { background-color: #4a5d4e; color: white; }
         .btn-primary:hover { background-color: #3b4b3e; }
         .btn-success { background-color: #059669; color: white; font-size: 14px; padding: 10px 24px; }
         .btn-success:hover { background-color: #047857; }
-        .btn-danger { background-color: #ef4444; color: white; padding: 6px 10px; font-size: 11px; }
+        .btn-danger { background-color: #ef4444; color: white; padding: 5px 8px; font-size: 11px; }
+        .btn-secondary { background-color: #6b7280; color: white; padding: 5px 8px; font-size: 11px; }
+        .btn-secondary:hover { background-color: #4b5563; }
         .btn-archive { background-color: #2563eb; color: white; }
         .btn-archive:hover { background-color: #1d4ed8; }
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+        
+        .btn-scroll-container {
+            width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 8px;
             margin-top: 15px;
+            -webkit-overflow-scrolling: touch;
         }
+        .btn-scroll-container::-webkit-scrollbar {
+            height: 6px;
+        }
+        .btn-scroll-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .btn-group {
+            display: inline-flex;
+            gap: 10px;
+        }
+
         .table-responsive-container {
             width: 100%;
             overflow-x: auto;
@@ -107,12 +125,13 @@
             border-collapse: collapse;
             margin-top: 10px;
             margin-bottom: 15px;
-            min-width: 400px;
+            min-width: 450px;
         }
         .input-table th, .input-table td {
             padding: 6px;
             border: 1px solid #e5e7eb;
             font-size: 12px;
+            vertical-align: middle;
         }
         .input-table th {
             background: #f9fafb;
@@ -151,7 +170,7 @@
             justify-content: flex-start;
         }
 
-        /* Top Header Full-Width Translucent Box (Opasitas 0.45) */
+        /* Top Header Full-Width Translucent Box */
         .top-bar-box {
             display: flex;
             flex-direction: column;
@@ -275,7 +294,7 @@
             padding-bottom: 10px;
         }
 
-        /* Table Styling (Border Tebal 2px) */
+        /* Table Styling */
         .doc-table {
             width: 100%;
             border-collapse: collapse;
@@ -310,7 +329,6 @@
             padding: 6px;
         }
 
-        /* Dynamic Payment Method & Terms Styles */
         .payment-method-box {
             margin-bottom: 8px;
         }
@@ -411,7 +429,6 @@
             margin-right: 0px;
         }
 
-        /* KOTAK HITAM BAWAH */
         .bottom-dark-box {
             width: 100%;
             height: 35px;
@@ -422,17 +439,13 @@
             margin-top: auto;
         }
 
-        /* RESPONSIVE DESIGN UNTUK LAYAR HP (MOBILE) */
         @media screen and (max-width: 768px) {
             body { padding: 10px; }
             .control-panel { padding: 15px; }
             .form-grid { grid-template-columns: 1fr; }
-            .btn-group { flex-direction: column; }
-            .btn { width: 100%; text-align: center; }
             .document-preview-scroll { border: 1px solid #cbd5e1; }
         }
 
-        /* PRINT STYLES */
         @media print {
             * {
                 -webkit-print-color-adjust: exact !important;
@@ -527,7 +540,7 @@
                             <th>Deskripsi</th>
                             <th style="width: 70px;">Qty</th>
                             <th style="width: 130px;">Harga (Rp)</th>
-                            <th style="width: 50px;">Aksi</th>
+                            <th style="width: 100px; text-align: center;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="inputRowsContainer">
@@ -535,16 +548,23 @@
                             <td><input type="text" class="item-desc" placeholder="new item" oninput="updatePreview()"></td>
                             <td><input type="number" class="item-qty" value="1" min="1" oninput="updatePreview()"></td>
                             <td><input type="text" class="item-price" value="0" onfocus="handleFocus(this)" onblur="handleBlur(this)" oninput="formatCurrencyInput(this)"></td>
-                            <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">X</button></td>
+                            <td style="text-align: center; white-space: nowrap;">
+                                <button type="button" class="btn btn-secondary" onclick="moveRow(this, -1)" title="Pindah ke Atas">⬆️</button>
+                                <button type="button" class="btn btn-secondary" onclick="moveRow(this, 1)" title="Pindah ke Bawah">⬇️</button>
+                                <button type="button" class="btn btn-danger" onclick="removeRow(this)" title="Hapus">X</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary" onclick="addRow()">+ Tambah Item</button>
-                <button type="button" class="btn btn-archive" onclick="saveToArchive()">📁 Simpan ke Arsip</button>
-                <button type="button" class="btn btn-success" onclick="printDocument()">🖨️ Cetak / Simpan PDF</button>
+            <!-- TOMBOL AKSI UTAMA -->
+            <div class="btn-scroll-container">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" onclick="addRow()">+ Tambah Item</button>
+                    <button type="button" class="btn btn-archive" onclick="saveToArchive()">📁 Simpan ke Arsip</button>
+                    <button type="button" class="btn btn-success" onclick="printDocument()">🖨️ Cetak / Simpan PDF</button>
+                </div>
             </div>
         </div>
 
@@ -601,7 +621,7 @@
                             </tfoot>
                         </table>
 
-                        <!-- Dynamic Bottom Section (Payment Method & Terms) -->
+                        <!-- Dynamic Bottom Section -->
                         <div id="dynamicBottomSection"></div>
                     </div>
 
@@ -719,7 +739,11 @@
                 <td><input type="text" class="item-desc" placeholder="new item" oninput="updatePreview()"></td>
                 <td><input type="number" class="item-qty" value="1" min="1" oninput="updatePreview()"></td>
                 <td><input type="text" class="item-price" value="0" onfocus="handleFocus(this)" onblur="handleBlur(this)" oninput="formatCurrencyInput(this)"></td>
-                <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">X</button></td>
+                <td style="text-align: center; white-space: nowrap;">
+                    <button type="button" class="btn btn-secondary" onclick="moveRow(this, -1)" title="Pindah ke Atas">⬆️</button>
+                    <button type="button" class="btn btn-secondary" onclick="moveRow(this, 1)" title="Pindah ke Bawah">⬇️</button>
+                    <button type="button" class="btn btn-danger" onclick="removeRow(this)" title="Hapus">X</button>
+                </td>
             `;
             tbody.appendChild(tr);
             updatePreview();
@@ -732,6 +756,23 @@
                 updatePreview();
             } else {
                 alert("Minimal harus ada 1 item!");
+            }
+        }
+
+        function moveRow(btn, direction) {
+            const row = btn.parentElement.parentElement;
+            const tbody = row.parentElement;
+            const rows = Array.from(tbody.rows);
+            const index = rows.indexOf(row);
+            
+            const targetIndex = index + direction;
+            if (targetIndex >= 0 && targetIndex < rows.length) {
+                if (direction === -1) {
+                    tbody.insertBefore(row, rows[targetIndex]);
+                } else {
+                    tbody.insertBefore(row, rows[targetIndex].nextSibling);
+                }
+                updatePreview();
             }
         }
 
