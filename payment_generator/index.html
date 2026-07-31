@@ -590,7 +590,6 @@
         <div class="btn-group">
             <button type="button" class="btn btn-primary" onclick="addRow()">+ Tambah Item</button>
             <button type="button" class="btn btn-archive" onclick="saveToArchive()">📁 Simpan ke Arsip</button>
-            <!-- Tombol Cetak telah diubah untuk menggunakan fungsi JavaScript khusus -->
             <button type="button" class="btn btn-success" onclick="printDocument()">🖨️ Cetak / Simpan PDF</button>
         </div>
     </div>
@@ -686,12 +685,23 @@
 </div>
 
 <script>
-    // --- FUNGSI PRINT ANTI PUTIH/BLANK ---
+    // --- FUNGSI PRINT ANTI PUTIH & NAMA FILE CUSTOM ---
     function printDocument() {
         const controlPanel = document.querySelector('.control-panel');
         const previewScroll = document.querySelector('.document-preview-scroll');
         const docContainer = document.querySelector('.document-container');
         
+        // --- MENGUBAH NAMA FILE PDF (Berdasarkan Title Web) ---
+        const originalTitle = document.title; // Simpan title asli
+        const docNo = document.getElementById('inDocNo').value || '000';
+        const docType = document.getElementById('inDocType').value;
+        const clientName = document.getElementById('inClientName').value || 'Client';
+        const projectName = document.getElementById('inProject').value || 'Project';
+        
+        // Ubah title menjadi format: 001_INVOICE MEAI_NamaClient_NamaProject
+        document.title = `${docNo}_${docType} MEAI_${clientName}_${projectName}`;
+        // ------------------------------------------------------
+
         // 1. Keluarkan dokumen dari elemen scroll (penyebab halaman terpotong/putih)
         document.body.appendChild(docContainer);
         
@@ -714,6 +724,9 @@
         previewScroll.appendChild(docContainer);
         controlPanel.style.display = 'block';
         previewScroll.style.display = 'block';
+        
+        // --- KEMBALIKAN TITLE KE SEMULA ---
+        document.title = originalTitle;
     }
     // ------------------------------------
 
