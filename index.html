@@ -54,7 +54,7 @@
         header {
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 1150;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -71,6 +71,28 @@
             display: flex;
             align-items: center;
             gap: 15px;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            background: none;
+            border: none;
+            color: #888;
+            font-family: inherit;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: color 0.2s;
+            padding: 4px 0;
+        }
+
+        .nav-link:hover, .nav-link:focus-visible {
+            color: #fff;
         }
 
         .brand-logo {
@@ -722,17 +744,107 @@
             font-size: 1.3rem;
         }
 
+        /* Rentals page */
+        .rental-tabs {
+            display: flex;
+            gap: 10px;
+            margin-top: 35px;
+        }
+
+        .rental-content {
+            padding: 60px 50px 100px 50px;
+        }
+
+        .rental-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .rental-card {
+            background: var(--panel-bg);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .rental-card .rental-eyebrow {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-faint);
+            margin-bottom: 10px;
+        }
+
+        .rental-card h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .rental-card .rental-price {
+            font-size: 1rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .rental-card ul {
+            list-style: none;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .rental-card li {
+            padding: 8px 0;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .rental-card li:first-child {
+            border-top: none;
+        }
+
+        .rental-card .rental-cta {
+            align-self: flex-start;
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .rental-card .rental-cta:hover, .rental-card .rental-cta:focus-visible {
+            border-color: var(--accent);
+            background: rgba(217, 56, 30, 0.15);
+        }
+
+        .rental-note {
+            margin-top: 40px;
+            color: var(--text-faint);
+            font-size: 13px;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero { grid-template-columns: 1fr; min-height: auto; }
-            header { padding: 20px; }
+            header { padding: 20px; flex-wrap: wrap; gap: 15px; row-gap: 12px; }
+            .header-center { order: 3; width: 100%; justify-content: center; }
+            .main-nav { gap: 20px; }
             .hero, .details-section, .portfolio, footer { padding: 40px 20px; }
             .options-panel { padding: 110px 20px 40px 20px; }
             .close-options { right: 20px; top: 25px; }
             .portfolio-item { flex: 0 0 280px; }
             .portfolio-nav-btns { display: flex; }
 
-            .detail-top, .detail-hero, .detail-body, .detail-gallery { padding-left: 20px; padding-right: 20px; }
+            .detail-top, .detail-hero, .detail-body, .detail-gallery, .rental-content { padding-left: 20px; padding-right: 20px; }
             .detail-body { grid-template-columns: 1fr; gap: 30px; }
             .detail-project-nav button { padding: 25px 20px; }
         }
@@ -756,10 +868,13 @@
                 <span>MEAI Studio</span>
             </div>
             <div class="header-center">
-                <span>Bali Indonesia</span>
+                <nav class="main-nav" aria-label="Primary">
+                    <button class="nav-link" id="navPortfolioBtn">Portfolio</button>
+                    <button class="nav-link" id="navRentalsBtn">Rentals</button>
+                </nav>
             </div>
             <button class="header-right" id="optionsBtn" aria-expanded="false" aria-controls="optionsPanel">
-                <span>Options *</span>
+                <span>Contact</span>
             </button>
         </header>
 
@@ -822,7 +937,7 @@
         </section>
 
         <!-- Portfolio Section -->
-        <section class="portfolio">
+        <section class="portfolio" id="portfolioSection">
             <div class="portfolio-header">
                 <h2>Portfolio</h2>
                 <span id="portfolioSubtext">Click a project to view details &amp; documentation</span>
@@ -874,6 +989,25 @@
             <button id="prevProjectBtn"><span>Previous</span><strong id="prevProjectTitle"></strong></button>
             <button id="nextProjectBtn"><span>Next</span><strong id="nextProjectTitle"></strong></button>
         </div>
+    </section>
+
+    <!-- Rentals Page (single-page route, no reload) -->
+    <section class="detail-view rental-view" id="rentalView" aria-hidden="true">
+        <div class="detail-top">
+            <button class="back-btn" id="rentalBackBtn">&larr; Back to Home</button>
+        </div>
+        <div class="detail-hero">
+            <div class="detail-category">Projector &amp; Lighting Rentals</div>
+            <h1>Rent What You Need</h1>
+            <div class="detail-body" style="padding:0;grid-template-columns:1fr;border-bottom:none;">
+                <p style="color:var(--text-muted);line-height:1.75;font-size:1.05rem;max-width:640px;margin-top:20px;">Choose a bundled package for a full event setup, or rent equipment individually if you already have a plan in place. Every rental can include delivery, setup, and an on-site operator on request.</p>
+            </div>
+            <div class="rental-tabs" id="rentalTabs">
+                <button type="button" class="tag-btn" data-rental-tab="packages" aria-pressed="true">Paket</button>
+                <button type="button" class="tag-btn" data-rental-tab="units" aria-pressed="false">Satuan</button>
+            </div>
+        </div>
+        <div class="rental-content" id="rentalContent"></div>
     </section>
 
     <script>
@@ -1025,6 +1159,89 @@
                 images: ["asset/portfolio/noema-resort/1.jpg", "asset/portfolio/noema-resort/2.jpg", "asset/portfolio/noema-resort/3.jpg"]
             }
         ];
+
+        // ---------------------------------------------------------------
+        // Rental data — package deals ("Paket") and à la carte items
+        // ("Satuan"). Prices are placeholders — replace with real pricing.
+        // ---------------------------------------------------------------
+        const rentalData = {
+            packages: [
+                {
+                    name: "Paket Basic Event",
+                    price: "Mulai dari — hubungi kami",
+                    includes: ["1x Proyektor 6.000 lumens", "Layar proyeksi standar", "Lighting dasar 4 titik", "Setup & bongkar"]
+                },
+                {
+                    name: "Paket Projection Mapping",
+                    price: "Mulai dari — hubungi kami",
+                    includes: ["2x Proyektor high-lumens", "Konten visual mapping custom", "Operator on-site 1 hari", "Media server & software"]
+                },
+                {
+                    name: "Paket Full Production",
+                    price: "Mulai dari — hubungi kami",
+                    includes: ["Proyektor + lighting stage penuh", "Visual jockey selama acara", "Stage design & rigging", "Tim teknis full event"]
+                }
+            ],
+            units: [
+                { name: "Proyektor 6.000 Lumens", price: "per hari — hubungi kami" },
+                { name: "Proyektor 10.000+ Lumens", price: "per hari — hubungi kami" },
+                { name: "Lighting Fixture (moving head / par led)", price: "per hari — hubungi kami" },
+                { name: "Layar Proyeksi", price: "per hari — hubungi kami" },
+                { name: "Media Server / Software Mapping", price: "per hari — hubungi kami" },
+                { name: "Operator / Visual Jockey", price: "per hari — hubungi kami" }
+            ]
+        };
+
+        const rentalContent = document.getElementById("rentalContent");
+        const rentalTabs = document.getElementById("rentalTabs");
+        let activeRentalTab = "packages";
+
+        function renderRentalContent() {
+            if (activeRentalTab === "packages") {
+                rentalContent.innerHTML = `
+                    <div class="rental-grid">
+                        ${rentalData.packages.map(pkg => `
+                            <div class="rental-card">
+                                <div class="rental-eyebrow">Paket</div>
+                                <h4>${pkg.name}</h4>
+                                <div class="rental-price">${pkg.price}</div>
+                                <ul>${pkg.includes.map(i => `<li>${i}</li>`).join("")}</ul>
+                                <button type="button" class="rental-cta" data-rental-name="${pkg.name}">Request Quote</button>
+                            </div>
+                        `).join("")}
+                    </div>
+                    <p class="rental-note">Semua paket bisa disesuaikan dengan kebutuhan venue dan jumlah tamu. Hubungi kami untuk penawaran detail.</p>
+                `;
+            } else {
+                rentalContent.innerHTML = `
+                    <div class="rental-grid">
+                        ${rentalData.units.map(unit => `
+                            <div class="rental-card">
+                                <div class="rental-eyebrow">Satuan</div>
+                                <h4>${unit.name}</h4>
+                                <div class="rental-price">${unit.price}</div>
+                                <button type="button" class="rental-cta" data-rental-name="${unit.name}">Request Quote</button>
+                            </div>
+                        `).join("")}
+                    </div>
+                    <p class="rental-note">Sewa satuan cocok jika kamu sudah punya rencana acara sendiri dan hanya butuh unit tertentu.</p>
+                `;
+            }
+        }
+
+        rentalTabs.addEventListener("click", (e) => {
+            const btn = e.target.closest("[data-rental-tab]");
+            if (!btn) return;
+            activeRentalTab = btn.dataset.rentalTab;
+            [...rentalTabs.children].forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+            renderRentalContent();
+        });
+
+        rentalContent.addEventListener("click", (e) => {
+            const cta = e.target.closest(".rental-cta");
+            if (!cta) return;
+            window.location.href = `mailto:studiocreative.meai@gmail.com?subject=${encodeURIComponent("Rental Inquiry: " + cta.dataset.rentalName)}`;
+        });
 
         // ---------------- Service tag filter (multi-select) ----------------
         const portfolioGrid = document.getElementById("portfolioGrid");
@@ -1241,6 +1458,49 @@
             }
         }
 
+        // ---------------- Rentals page routing ----------------
+        const rentalView = document.getElementById("rentalView");
+        const rentalBackBtn = document.getElementById("rentalBackBtn");
+
+        function openRental({ updateHash = true } = {}) {
+            closeProject({ updateHash: false });
+            renderRentalContent();
+            mainContent.style.display = "none";
+            rentalView.classList.add("active");
+            rentalView.setAttribute("aria-hidden", "false");
+            rentalView.scrollTop = 0;
+
+            if (updateHash) {
+                history.pushState({}, "", "#rentals");
+            }
+            rentalBackBtn.focus();
+        }
+
+        function closeRental({ updateHash = true } = {}) {
+            rentalView.classList.remove("active");
+            rentalView.setAttribute("aria-hidden", "true");
+            mainContent.style.display = "";
+
+            if (updateHash && location.hash.startsWith("#rentals")) {
+                history.pushState({}, "", location.pathname + location.search);
+            }
+        }
+
+        rentalBackBtn.addEventListener("click", () => closeRental());
+
+        // ---------------- Header nav: Portfolio (scroll) / Rentals (page) ----------------
+        const navPortfolioBtn = document.getElementById("navPortfolioBtn");
+        const navRentalsBtn = document.getElementById("navRentalsBtn");
+        const portfolioSection = document.getElementById("portfolioSection");
+
+        navPortfolioBtn.addEventListener("click", () => {
+            closeProject();
+            closeRental();
+            portfolioSection.scrollIntoView({ behavior: "smooth" });
+        });
+
+        navRentalsBtn.addEventListener("click", () => openRental());
+
         portfolioGrid.addEventListener("click", (e) => {
             const item = e.target.closest(".portfolio-item");
             if (item) openProject(item.dataset.slug);
@@ -1262,17 +1522,24 @@
         window.addEventListener("popstate", () => {
             const hash = location.hash;
             if (hash.startsWith("#project-")) {
+                closeRental({ updateHash: false });
                 openProject(hash.replace("#project-", ""), { updateHash: false });
+            } else if (hash.startsWith("#rentals")) {
+                openRental({ updateHash: false });
             } else {
                 closeProject({ updateHash: false });
+                closeRental({ updateHash: false });
             }
         });
 
-        // Deep-link support: open directly on a project if the URL has a hash on load.
+        // Deep-link support: open directly on a project or the rentals page
+        // if the URL already has a matching hash on load.
         (function initFromHash() {
             const hash = location.hash;
             if (hash.startsWith("#project-")) {
                 openProject(hash.replace("#project-", ""), { updateHash: false });
+            } else if (hash.startsWith("#rentals")) {
+                openRental({ updateHash: false });
             }
         })();
     </script>
