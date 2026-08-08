@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="MEAI Studio — projection mapping, lighting design, dan interactive installation untuk korporasi dan individu di Bali, Indonesia.">
+    <meta name="description" content="MEAI Studio — projection mapping, lighting design, and interactive installation for corporations and individuals in Bali, Indonesia.">
     <title>MEAI Studio</title>
     <link rel="icon" type="image/png" href="asset/logo/meai">
     <style>
@@ -532,6 +532,53 @@
 
         .socials a:hover { color: #fff; }
 
+        .footer-contact {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-contact a {
+            color: #777;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-contact a:hover { color: #fff; }
+
+        /* Our Clients section */
+        .clients-section {
+            padding: 80px 50px 100px 50px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .clients-section h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-faint);
+            margin-bottom: 30px;
+        }
+
+        .clients-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px 50px;
+        }
+
+        .clients-grid span {
+            font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            transition: color 0.2s;
+        }
+
+        .clients-grid span:hover {
+            color: #fff;
+        }
+
         /* ===== Portfolio Detail Page ===== */
         .detail-view {
             position: fixed;
@@ -745,12 +792,6 @@
         }
 
         /* Rentals page */
-        .rental-tabs {
-            display: flex;
-            gap: 10px;
-            margin-top: 35px;
-        }
-
         .rental-content {
             padding: 60px 50px 100px 50px;
         }
@@ -776,6 +817,7 @@
             letter-spacing: 1.5px;
             color: var(--text-faint);
             margin-bottom: 10px;
+            display: none;
         }
 
         .rental-card h4 {
@@ -835,10 +877,27 @@
         /* Responsive */
         @media (max-width: 768px) {
             .hero { grid-template-columns: 1fr; min-height: auto; }
-            header { padding: 20px; flex-wrap: wrap; gap: 15px; row-gap: 12px; }
+            header { padding: 16px 20px; flex-wrap: wrap; gap: 12px; row-gap: 12px; }
+            .header-right { padding: 10px 16px; }
             .header-center { order: 3; width: 100%; justify-content: center; }
-            .main-nav { gap: 20px; }
-            .hero, .details-section, .portfolio, footer { padding: 40px 20px; }
+            .main-nav { width: 100%; gap: 10px; }
+            .nav-link {
+                flex: 1;
+                text-align: center;
+                padding: 12px 0;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                border-radius: 24px;
+                font-size: 12px;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .nav-link:hover, .nav-link:focus-visible, .nav-link:active {
+                border-color: rgba(255, 255, 255, 0.5);
+                background: rgba(255, 255, 255, 0.06);
+            }
+            .hero, .details-section, .portfolio, .clients-section, footer { padding: 40px 20px; }
             .options-panel { padding: 110px 20px 40px 20px; }
             .close-options { right: 20px; top: 25px; }
             .portfolio-item { flex: 0 0 280px; }
@@ -884,6 +943,7 @@
             <div class="option-group">
                 <h4>Contact</h4>
                 <p><a href="mailto:studiocreative.meai@gmail.com">studiocreative.meai@gmail.com</a></p>
+                <p><a href="https://wa.me/62881038177078?text=Hi%2C%20I'd%20like%20to%20know%20more%20about%20MEAI%20Studio's%20services." target="_blank" rel="noopener">+62 881 0381 77078 (Dian)</a></p>
             </div>
             <div class="option-group">
                 <h4>Address</h4>
@@ -951,10 +1011,20 @@
             </div>
         </section>
 
+        <!-- Our Clients Section -->
+        <section class="clients-section" id="clientsSection">
+            <h3>Our Clients</h3>
+            <div class="clients-grid" id="clientsGrid"><!-- names injected by JS from portfolioData --></div>
+        </section>
+
         <!-- Footer -->
         <footer>
             <div>
-                <p>© 2026 Studio. All rights reserved.</p>
+                <p>© 2026 MEAI Studio. All rights reserved.</p>
+            </div>
+            <div class="footer-contact">
+                <a href="mailto:studiocreative.meai@gmail.com">studiocreative.meai@gmail.com</a>
+                <a href="https://wa.me/62881038177078?text=Hi%2C%20I'd%20like%20to%20know%20more%20about%20MEAI%20Studio's%20services." target="_blank" rel="noopener">+62 881 0381 77078 (Dian)</a>
             </div>
         </footer>
     </div>
@@ -1000,11 +1070,7 @@
             <div class="detail-category">Projector &amp; Lighting Rentals</div>
             <h1>Rent What You Need</h1>
             <div class="detail-body" style="padding:0;grid-template-columns:1fr;border-bottom:none;">
-                <p style="color:var(--text-muted);line-height:1.75;font-size:1.05rem;max-width:640px;margin-top:20px;">Choose a bundled package for a full event setup, or rent equipment individually if you already have a plan in place. Every rental can include delivery, setup, and an on-site operator on request.</p>
-            </div>
-            <div class="rental-tabs" id="rentalTabs">
-                <button type="button" class="tag-btn" data-rental-tab="packages" aria-pressed="true">Paket</button>
-                <button type="button" class="tag-btn" data-rental-tab="units" aria-pressed="false">Satuan</button>
+                <p style="color:var(--text-muted);line-height:1.75;font-size:1.05rem;max-width:640px;margin-top:20px;">Rent equipment individually if you already have a plan in place. Every rental can include delivery, setup, and an on-site operator on request.</p>
             </div>
         </div>
         <div class="rental-content" id="rentalContent"></div>
@@ -1161,87 +1227,50 @@
         ];
 
         // ---------------------------------------------------------------
-        // Rental data — package deals ("Paket") and à la carte items
-        // ("Satuan"). Prices are placeholders — replace with real pricing.
+        // Rental data — individual equipment items shown directly on the
+        // Rentals page (no package/unit tabs). Prices are placeholders —
+        // replace with real pricing.
         // ---------------------------------------------------------------
         const rentalData = {
-            packages: [
-                {
-                    name: "Paket Basic Event",
-                    price: "Mulai dari — hubungi kami",
-                    includes: ["1x Proyektor 6.000 lumens", "Layar proyeksi standar", "Lighting dasar 4 titik", "Setup & bongkar"]
-                },
-                {
-                    name: "Paket Projection Mapping",
-                    price: "Mulai dari — hubungi kami",
-                    includes: ["2x Proyektor high-lumens", "Konten visual mapping custom", "Operator on-site 1 hari", "Media server & software"]
-                },
-                {
-                    name: "Paket Full Production",
-                    price: "Mulai dari — hubungi kami",
-                    includes: ["Proyektor + lighting stage penuh", "Visual jockey selama acara", "Stage design & rigging", "Tim teknis full event"]
-                }
-            ],
             units: [
-                { name: "Proyektor 6.000 Lumens", price: "per hari — hubungi kami" },
-                { name: "Proyektor 10.000+ Lumens", price: "per hari — hubungi kami" },
-                { name: "Lighting Fixture (moving head / par led)", price: "per hari — hubungi kami" },
-                { name: "Layar Proyeksi", price: "per hari — hubungi kami" },
-                { name: "Media Server / Software Mapping", price: "per hari — hubungi kami" },
-                { name: "Operator / Visual Jockey", price: "per hari — hubungi kami" }
+                { name: "Projector 4,600 Lumens Laser", price: "per day — contact us" },
+                { name: "Laser Bar", price: "per day — contact us" },
+                { name: "Laser Box", price: "per day — contact us" },
+                { name: "Lighting Operation", price: "per day — contact us" },
+                { name: "Operator / Visual Jockey", price: "per day — contact us" },
+                { name: "Interactive Installation", price: "per day — contact us" }
             ]
         };
 
         const rentalContent = document.getElementById("rentalContent");
-        const rentalTabs = document.getElementById("rentalTabs");
-        let activeRentalTab = "packages";
 
         function renderRentalContent() {
-            if (activeRentalTab === "packages") {
-                rentalContent.innerHTML = `
-                    <div class="rental-grid">
-                        ${rentalData.packages.map(pkg => `
-                            <div class="rental-card">
-                                <div class="rental-eyebrow">Paket</div>
-                                <h4>${pkg.name}</h4>
-                                <div class="rental-price">${pkg.price}</div>
-                                <ul>${pkg.includes.map(i => `<li>${i}</li>`).join("")}</ul>
-                                <button type="button" class="rental-cta" data-rental-name="${pkg.name}">Request Quote</button>
-                            </div>
-                        `).join("")}
-                    </div>
-                    <p class="rental-note">Semua paket bisa disesuaikan dengan kebutuhan venue dan jumlah tamu. Hubungi kami untuk penawaran detail.</p>
-                `;
-            } else {
-                rentalContent.innerHTML = `
-                    <div class="rental-grid">
-                        ${rentalData.units.map(unit => `
-                            <div class="rental-card">
-                                <div class="rental-eyebrow">Satuan</div>
-                                <h4>${unit.name}</h4>
-                                <div class="rental-price">${unit.price}</div>
-                                <button type="button" class="rental-cta" data-rental-name="${unit.name}">Request Quote</button>
-                            </div>
-                        `).join("")}
-                    </div>
-                    <p class="rental-note">Sewa satuan cocok jika kamu sudah punya rencana acara sendiri dan hanya butuh unit tertentu.</p>
-                `;
-            }
+            rentalContent.innerHTML = `
+                <div class="rental-grid">
+                    ${rentalData.units.map(unit => `
+                        <div class="rental-card">
+                            <h4>${unit.name}</h4>
+                            <div class="rental-price">${unit.price}</div>
+                            <button type="button" class="rental-cta" data-rental-name="${unit.name}">Request Quote</button>
+                        </div>
+                    `).join("")}
+                </div>
+                <p class="rental-note">Need a combination of units for your event? Contact us for a detailed quote.</p>
+            `;
         }
-
-        rentalTabs.addEventListener("click", (e) => {
-            const btn = e.target.closest("[data-rental-tab]");
-            if (!btn) return;
-            activeRentalTab = btn.dataset.rentalTab;
-            [...rentalTabs.children].forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
-            renderRentalContent();
-        });
 
         rentalContent.addEventListener("click", (e) => {
             const cta = e.target.closest(".rental-cta");
             if (!cta) return;
-            window.location.href = `mailto:studiocreative.meai@gmail.com?subject=${encodeURIComponent("Rental Inquiry: " + cta.dataset.rentalName)}`;
+            const message = `Hi, I'd like to request a quote for ${cta.dataset.rentalName}.`;
+            window.open(`https://wa.me/62881038177078?text=${encodeURIComponent(message)}`, "_blank", "noopener");
         });
+
+        // ---------------- Our Clients (derived from portfolio project names) ----------------
+        const clientsGrid = document.getElementById("clientsGrid");
+        clientsGrid.innerHTML = [...new Set(portfolioData.map(p => p.title))]
+            .map(name => `<span>${name}</span>`)
+            .join("");
 
         // ---------------- Service tag filter (multi-select) ----------------
         const portfolioGrid = document.getElementById("portfolioGrid");
