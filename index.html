@@ -1,24 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MEAI Studio — projection mapping, lighting design, dan interactive installation untuk korporasi dan individu di Bali, Indonesia.">
     <title>MEAI Studio</title>
-    <!-- Favicon menggunakan logo -->
     <link rel="icon" type="image/png" href="asset/logo/meai">
     <style>
+        :root {
+            --bg-top: #222222;
+            --bg-bottom: #080808;
+            --panel-bg: #141414;
+            --panel-bg-light: #f4f4f4;
+            --text-primary: #ffffff;
+            --text-muted: #aaaaaa;
+            --text-faint: #777777;
+            --border-subtle: rgba(255, 255, 255, 0.1);
+            --accent: #d9381e;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            background: linear-gradient(to bottom, #222222, #080808);
-            color: #ffffff;
+            background: linear-gradient(to bottom, var(--bg-top), var(--bg-bottom));
+            color: var(--text-primary);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             overflow-x: hidden;
             min-height: 100vh;
+        }
+
+        a { color: inherit; }
+
+        img, .doc-photo { max-width: 100%; }
+
+        button {
+            font-family: inherit;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--text-primary);
+            outline-offset: 3px;
         }
 
         /* Header / Nav Sticky & Blur */
@@ -30,7 +59,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 30px 50px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--border-subtle);
             font-size: 14px;
             letter-spacing: 1px;
             background-color: rgba(13, 13, 13, 0.75);
@@ -44,7 +73,6 @@
             gap: 15px;
         }
 
-        /* Styling Aksen Logo pada Header dengan Invert Putih */
         .brand-logo {
             height: 28px;
             width: auto;
@@ -60,6 +88,11 @@
         .header-right {
             cursor: pointer;
             user-select: none;
+            background: none;
+            border: none;
+            color: inherit;
+            font-size: 14px;
+            letter-spacing: 1px;
         }
 
         /* Panel Dropdown Options */
@@ -68,12 +101,12 @@
             top: -100%;
             left: 0;
             width: 100%;
-            background-color: #f4f4f4;
+            background-color: var(--panel-bg-light);
             color: #111111;
             padding: 120px 50px 60px 50px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transition: top 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-            z-index: 999;
+            z-index: 1100;
             display: flex;
             flex-direction: column;
             gap: 30px;
@@ -99,8 +132,8 @@
             transition: color 0.2s;
         }
 
-        .option-group a:hover {
-            color: #d9381e;
+        .option-group a:hover, .option-group a:focus-visible {
+            color: var(--accent);
         }
 
         .close-options {
@@ -112,9 +145,12 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 700;
+            background: none;
+            border: none;
+            color: #111;
         }
 
-        /* Hero Section dengan Background GIF 9:16 yang Diperbesar */
+        /* Hero Section */
         .hero {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -122,7 +158,7 @@
             padding: 50px;
             gap: 50px;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--border-subtle);
             position: relative;
             overflow: hidden;
             background-color: #080808;
@@ -168,6 +204,7 @@
         .tags {
             display: flex;
             gap: 15px;
+            flex-wrap: wrap;
         }
 
         .tag {
@@ -198,7 +235,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 50px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--border-subtle);
         }
 
         .details-col h3 {
@@ -228,10 +265,10 @@
             color: #ddd;
         }
 
-        /* Portfolio Section - Geser ke Samping */
+        /* Portfolio Section */
         .portfolio {
             padding: 100px 50px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--border-subtle);
             position: relative;
         }
 
@@ -244,11 +281,108 @@
             text-transform: uppercase;
         }
 
+        .portfolio-header span {
+            display: block;
+            margin-top: 8px;
+            color: var(--text-faint);
+            font-size: 14px;
+        }
+
+        /* Service tag filter */
+        .tag-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 35px;
+        }
+
+        .tag-btn {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ccc;
+            padding: 9px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s, color 0.2s;
+            white-space: nowrap;
+        }
+
+        .tag-btn:hover, .tag-btn:focus-visible {
+            border-color: rgba(255, 255, 255, 0.5);
+            color: #fff;
+        }
+
+        .tag-btn[aria-pressed="true"] {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        .tag-btn.tag-btn-clear {
+            color: var(--text-faint);
+            border-style: dashed;
+        }
+
+        .tag-btn.tag-btn-clear:hover, .tag-btn.tag-btn-clear:focus-visible {
+            color: #fff;
+        }
+
+        .no-results {
+            color: var(--text-faint);
+            padding: 30px 0;
+        }
+
+        /* Small service chips shown on each portfolio card */
+        .item-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 18px;
+        }
+
+        .item-tags span {
+            font-size: 11px;
+            letter-spacing: 0.3px;
+            color: #999;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        /* Clickable service chips on the detail page */
+        .detail-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 28px;
+        }
+
+        .detail-tags button {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ddd;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .detail-tags button:hover, .detail-tags button:focus-visible {
+            border-color: var(--accent);
+            background: rgba(217, 56, 30, 0.15);
+        }
+
         .portfolio-grid {
             display: flex;
             gap: 30px;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
+            padding-top: 15px;
+            padding-left: 15px;
             padding-bottom: 20px;
             scrollbar-width: thin;
             scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
@@ -271,17 +405,20 @@
         .portfolio-item {
             flex: 0 0 350px;
             scroll-snap-align: start;
-            background: #141414;
+            background: var(--panel-bg);
             padding: 40px;
             border-radius: 8px;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: left;
+            color: inherit;
         }
 
-        .portfolio-item:hover {
-            transform: translateY(-5px);
+        .portfolio-item:hover, .portfolio-item:focus-visible {
+            transform: scale(1.03);
             border-color: rgba(255, 255, 255, 0.2);
+            background: #191919;
         }
 
         .portfolio-item .number {
@@ -304,7 +441,15 @@
             font-weight: 700;
         }
 
-        /* Tombol Navigasi Portofolio (Hanya muncul di HP) */
+        .portfolio-item .view-link {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-faint);
+        }
+
         .portfolio-nav-btns {
             display: none;
             justify-content: space-between;
@@ -335,17 +480,10 @@
             transition: background 0.2s;
         }
 
-        #slideLeft {
-            margin-left: 5px;
-        }
+        #slideLeft { margin-left: 5px; }
+        #slideRight { margin-right: 5px; }
 
-        #slideRight {
-            margin-right: 5px;
-        }
-
-        .port-btn:active {
-            background: rgba(255, 255, 255, 0.3);
-        }
+        .port-btn:active { background: rgba(255, 255, 255, 0.3); }
 
         /* Footer */
         footer {
@@ -355,6 +493,8 @@
             align-items: center;
             color: #777;
             font-size: 14px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .socials {
@@ -368,196 +508,748 @@
             transition: color 0.2s;
         }
 
-        .socials a:hover {
-            color: #fff;
+        .socials a:hover { color: #fff; }
+
+        /* ===== Portfolio Detail Page ===== */
+        .detail-view {
+            position: fixed;
+            inset: 0;
+            z-index: 1200;
+            background: linear-gradient(to bottom, var(--bg-top), var(--bg-bottom));
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(16px);
+            transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
         }
 
-        /* Responsif untuk layar kecil / HP */
+        .detail-view.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .detail-top {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 50px;
+            background-color: rgba(13, 13, 13, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .back-btn {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .back-btn:hover, .back-btn:focus-visible {
+            border-color: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .detail-counter {
+            font-size: 13px;
+            color: var(--text-faint);
+            letter-spacing: 1px;
+        }
+
+        .detail-hero {
+            padding: 70px 50px 50px 50px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .detail-category {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-faint);
+            margin-bottom: 18px;
+        }
+
+        .detail-hero h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            line-height: 1;
+            font-weight: 800;
+            text-transform: uppercase;
+            max-width: 900px;
+        }
+
+        .detail-meta {
+            display: flex;
+            gap: 40px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        .detail-meta div {
+            font-size: 14px;
+        }
+
+        .detail-meta span {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-faint);
+            margin-bottom: 6px;
+        }
+
+        .detail-body {
+            padding: 60px 50px;
+            display: grid;
+            grid-template-columns: minmax(0, 620px) 1fr;
+            gap: 60px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .detail-body p {
+            color: var(--text-muted);
+            line-height: 1.75;
+            font-size: 1.05rem;
+        }
+
+        .detail-body p + p {
+            margin-top: 18px;
+        }
+
+        .detail-highlights {
+            list-style: none;
+        }
+
+        .detail-highlights h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-faint);
+            margin-bottom: 16px;
+        }
+
+        .detail-highlights li {
+            padding: 12px 0;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        .detail-gallery {
+            padding: 60px 50px 100px 50px;
+        }
+
+        .detail-gallery h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-faint);
+            margin-bottom: 24px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .doc-photo {
+            aspect-ratio: 4 / 3;
+            border-radius: 8px;
+            background-color: #171717;
+            background-size: cover;
+            background-position: center;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .gallery-grid .doc-photo:first-child {
+            grid-column: span 2;
+            aspect-ratio: 16 / 9;
+        }
+
+        @media (max-width: 640px) {
+            .gallery-grid .doc-photo:first-child {
+                grid-column: span 1;
+                aspect-ratio: 4 / 3;
+            }
+        }
+
+        .detail-project-nav {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .detail-project-nav button {
+            flex: 1;
+            background: none;
+            border: none;
+            color: inherit;
+            padding: 40px 50px;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .detail-project-nav button:last-child {
+            text-align: right;
+        }
+
+        .detail-project-nav button:hover, .detail-project-nav button:focus-visible {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .detail-project-nav span {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-faint);
+            margin-bottom: 8px;
+        }
+
+        .detail-project-nav strong {
+            font-size: 1.3rem;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero {
-                grid-template-columns: 1fr;
-                min-height: auto;
-            }
-            header {
-                padding: 20px;
-            }
-            .hero, .details-section, .portfolio, footer {
-                padding: 40px 20px;
-            }
-            .options-panel {
-                padding: 110px 20px 40px 20px; 
-            }
-            .close-options {
-                right: 20px;
-                top: 25px;
-            }
-            .portfolio-item {
-                flex: 0 0 280px;
-            }
-            .portfolio-nav-btns {
-                display: flex;
+            .hero { grid-template-columns: 1fr; min-height: auto; }
+            header { padding: 20px; }
+            .hero, .details-section, .portfolio, footer { padding: 40px 20px; }
+            .options-panel { padding: 110px 20px 40px 20px; }
+            .close-options { right: 20px; top: 25px; }
+            .portfolio-item { flex: 0 0 280px; }
+            .portfolio-nav-btns { display: flex; }
+
+            .detail-top, .detail-hero, .detail-body, .detail-gallery { padding-left: 20px; padding-right: 20px; }
+            .detail-body { grid-template-columns: 1fr; gap: 30px; }
+            .detail-project-nav button { padding: 25px 20px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation -->
-    <header>
-        <div class="header-left">
-            <img src="asset/logo/meai" alt="Meai Studio Logo" class="brand-logo">
-            <span>MEAI Studio</span>
-        </div>
-        <div class="header-center">
-            <span>Bali Indonesia</span>
-        </div>
-        <div class="header-right" id="optionsBtn">
-            <span>Options *</span>
-        </div>
-    </header>
+    <div id="mainContent">
+        <!-- Header Navigation -->
+        <header>
+            <div class="header-left">
+                <img src="asset/logo/meai" alt="Meai Studio Logo" class="brand-logo">
+                <span>MEAI Studio</span>
+            </div>
+            <div class="header-center">
+                <span>Bali Indonesia</span>
+            </div>
+            <button class="header-right" id="optionsBtn" aria-expanded="false" aria-controls="optionsPanel">
+                <span>Options *</span>
+            </button>
+        </header>
 
-    <!-- Dropdown Options Panel -->
-    <div class="options-panel" id="optionsPanel">
-        <div class="close-options" id="closeOptionsBtn">Close [X]</div>
-        <div class="option-group">
-            <h4>Contact</h4>
-            <p><a href="mailto:studiocreative.meai@gmail.com">studiocreative.meai@gmail.com</a></p>
+        <!-- Dropdown Options Panel -->
+        <div class="options-panel" id="optionsPanel" aria-hidden="true">
+            <button class="close-options" id="closeOptionsBtn">Close [X]</button>
+            <div class="option-group">
+                <h4>Contact</h4>
+                <p><a href="mailto:studiocreative.meai@gmail.com">studiocreative.meai@gmail.com</a></p>
+            </div>
+            <div class="option-group">
+                <h4>Address</h4>
+                <p><a href="https://maps.app.goo.gl/g8jC9vSsXfaSZgRu5" target="_blank" rel="noopener">Jalan Gatsu Timur 88X, Kesiman Petilan, Denpasar Timur, Kota Denpasar, Bali, 80237</a></p>
+            </div>
+            <div class="option-group">
+                <h4>Instagram</h4>
+                <p><a href="https://instagram.com/meai.studio" target="_blank" rel="noopener">@meai.studio</a></p>
+            </div>
         </div>
-        <div class="option-group">
-            <h4>Address</h4>
-            <p><a href="https://maps.app.goo.gl/g8jC9vSsXfaSZgRu5" target="_blank">Jalan Gatsu Timur 88X, Kesiman Petilan, Denpasar Timur, Kota Denpasar, Bali, 80237</a></p>
-        </div>
-        <div class="option-group">
-            <h4>Instagram</h4>
-            <p><a href="https://instagram.com/meai.studio" target="_blank">@meai.studio</a></p>
-        </div>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-left">
+                <h1>MEAI<br>Creative<br>Studio</h1>
+                <div class="tags">
+                    <span class="tag">Visual Mapping</span>
+                    <span class="tag">Lighting</span>
+                </div>
+            </div>
+            <div class="hero-right">
+                <p>"Lighting up spaces with visuals, sound, and imagination."</p>
+            </div>
+        </section>
+
+        <!-- About / Details Section -->
+        <section class="details-section">
+            <div class="details-col">
+                <h3>Creative Studio</h3>
+                <p>As a digital creator, Meai Studio offers design services, visual mapping, and installation of new media art for corporations and individuals.</p>
+            </div>
+            <div class="details-col">
+                <h3>Our Strengths</h3>
+                <ul class="strengths-list">
+                    <li>Projection Mapping</li>
+                    <li>Projector Rentals</li>
+                    <li>Projector Setup</li>
+                    <li>Projector Purchasing</li>
+                    <li>Lighting Rentals</li>
+                    <li>Lighting Purchasing</li>
+                    <li>Lighting Operation</li>
+                    <li>Stage Design</li>
+                    <li>Visual Jokey</li>
+                    <li>Visual Assets</li>
+                    <li>Interactive Installation</li>
+                </ul>
+            </div>
+            <div class="details-col">
+                <h3>About Studio</h3>
+                <p>Born from a dream to merge art, digital and technology, Meai Studio was established in 2022. Since then, we have been working as digital innovators, fulfilling the design needs of corporations and individuals across Indonesia and even beyond. Our focus is on delivering outstanding design services, breathtaking visual mapping, and awe-inspiring new media art installations.</p>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section class="portfolio">
+            <div class="portfolio-header">
+                <h2>Portfolio</h2>
+                <span id="portfolioSubtext">Click a project to view details &amp; documentation</span>
+            </div>
+            <div class="tag-filter" id="tagFilter" role="group" aria-label="Filter portfolio by service"><!-- tag buttons injected by JS --></div>
+            <div class="portfolio-grid" id="portfolioGrid"><!-- items injected by JS from portfolioData --></div>
+            <p class="no-results" id="noResults" hidden>No projects match the selected services yet.</p>
+            <div class="portfolio-nav-btns">
+                <button class="port-btn" id="slideLeft" aria-label="Scroll portfolio left">‹</button>
+                <button class="port-btn" id="slideRight" aria-label="Scroll portfolio right">›</button>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div>
+                <p>© 2026 Studio. All rights reserved.</p>
+            </div>
+        </footer>
     </div>
 
-    <!-- Hero Section dengan Background GIF -->
-    <section class="hero">
-        <div class="hero-left">
-            <h1>MEAI<br>Creative<br>Studio</h1>
-            <div class="tags">
-                <span class="tag">Visual Mapping</span>
-                <span class="tag">Lighting</span>
+    <!-- Portfolio Detail Page (single-page route, no reload) -->
+    <section class="detail-view" id="detailView" aria-hidden="true">
+        <div class="detail-top">
+            <button class="back-btn" id="backBtn">&larr; Back to Portfolio</button>
+            <span class="detail-counter" id="detailCounter"></span>
+        </div>
+        <div class="detail-hero">
+            <div class="detail-category" id="detailCategory"></div>
+            <h1 id="detailTitle"></h1>
+            <div class="detail-meta">
+                <div><span>Location</span><strong id="detailLocation"></strong></div>
+                <div><span>Year</span><strong id="detailYear"></strong></div>
+                <div><span>Scope</span><strong id="detailScope"></strong></div>
             </div>
+            <div class="detail-tags" id="detailTags" aria-label="Services used on this project"></div>
         </div>
-        <div class="hero-right">
-            <p>"Lighting up spaces with visuals, sound, and imagination."</p>
-        </div>
-    </section>
-
-    <!-- About / Details Section -->
-    <section class="details-section">
-        <div class="details-col">
-            <h3>Creative Studio</h3>
-            <p>As a digital creator, Meai Studio offers design services, visual mapping, and installation of new media art for corporations and individuals.</p>
-        </div>
-        <div class="details-col">
-            <h3>Our Strengths</h3>
-            <ul class="strengths-list">
-                <li>Projection Mapping</li>
-                <li>Projector Rentals</li>
-                <li>Projector Setup</li>
-                <li>Projector Purchasing</li>
-                <li>Lighting Rentals</li>
-                <li>Lighting Purchasing</li>
-                <li>Lighting Operation</li>
-                <li>Stage Design</li>
-                <li>Visual Jokey</li>
-                <li>Visual Assets</li>
-                <li>Interactive Installation</li>
+        <div class="detail-body">
+            <div id="detailDescription"></div>
+            <ul class="detail-highlights" id="detailHighlights">
+                <h4>Highlights</h4>
             </ul>
         </div>
-        <div class="details-col">
-            <h3>About Studio</h3>
-            <p>Born from a dream to merge art, digital and technology, Meai Studio was established in 2022. Since then, we have been working as digital innovators, fulfilling the design needs of corporations and individuals across Indonesia and even beyond. Our focus is on delivering outstanding design services, breathtaking visual mapping, and awe-inspiring new media art installations. </p>
+        <div class="detail-gallery">
+            <h3>Documentation</h3>
+            <div class="gallery-grid" id="detailGallery"></div>
+        </div>
+        <div class="detail-project-nav">
+            <button id="prevProjectBtn"><span>Previous</span><strong id="prevProjectTitle"></strong></button>
+            <button id="nextProjectBtn"><span>Next</span><strong id="nextProjectTitle"></strong></button>
         </div>
     </section>
 
-    <!-- Portfolio Section -->
-    <section class="portfolio">
-        <div class="portfolio-header">
-            <h2>Portfolio</h2>
-        </div>
-        <div class="portfolio-grid" id="portfolioGrid">
-            <div class="portfolio-item">
-                <div class="category">Projection Mapping</div>
-                <h4>Pottato Head</h4>
-            </div>
-            <div class="portfolio-item">
-                <div class="category">Projection Mapping</div>
-                <h4>Sudamala Resort</h4>
-            </div>
-            <div class="portfolio-item">
-                <div class="category">Projection Mapping</div>
-                <h4>Club House CUSTOMWAR 2025</h4>
-            </div>
-            <div class="portfolio-item">
-                <div class="category">Projection Mapping</div>
-                <h4>Analogue Listening Space</h4>
-            </div>
-            <div class="portfolio-item">
-                <div class="category">Lighting Design</div>
-                <h4>DUNIA Ulu Cliffhouse</h4>
-            </div>
-            <div class="portfolio-item">
-                <div class="category">Lighting Design</div>
-                <h4>DATs Event</h4>
-            </div>
-            <div class="portfolio-item">
-                <div class="category">Interactive Installation</div>
-                <h4>MissFish</h4>
-            </div>
-            <div class="portfolio-item">
-                <div class="category">Projection Mapping</div>
-                <h4>Road To AXEAN Fest The Craft Ubud Hotel</h4>
-            </div>
-            <div class="portfolio-item">
-                <div class="category">Projection Mapping</div>
-                <h4>NOEMA Resort</h4>
-            </div>
-        </div>
-        <!-- Tombol Panah Navigasi HP di Tepi Layar -->
-        <div class="portfolio-nav-btns">
-            <button class="port-btn" id="slideLeft">‹</button>
-            <button class="port-btn" id="slideRight">›</button>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div>
-            <p>© 2026 Studio. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Script Interaksi -->
     <script>
+        // ---------------------------------------------------------------
+        // Portfolio data — single source of truth for grid, filter tags,
+        // and detail pages. "services" drives the clickable filter chips
+        // above the grid (multi-select) and the chips on each detail page
+        // — reuse the exact same label spelling across projects so they
+        // group together as one filter. Replace "description", "highlights"
+        // and image paths with real project content. Images that fail to
+        // load simply fall back to a dark placeholder tile (no broken-image
+        // icon), so it's safe to ship this before real photos are uploaded.
+        // Put real photos at: asset/portfolio/<slug>/1.jpg, 2.jpg, 3.jpg ...
+        // ---------------------------------------------------------------
+        const portfolioData = [
+            {
+                slug: "pottato-head",
+                category: "Projection Mapping",
+                title: "Pottato Head",
+                location: "Bali, Indonesia",
+                year: "2025",
+                scope: "Projection Mapping",
+                services: ["Projection Mapping", "Projector Rentals", "Projector Setup", "Visual Assets"],
+                description: [
+                    "A dynamic projection mapping installation designed to work with the venue's existing architecture, using synchronized light and sound to turn a static facade into a moving canvas.",
+                    "The visuals were built to hold up in a high-traffic beach-club setting, running reliably across multiple nights while staying flexible enough for live cues."
+                ],
+                highlights: ["Custom visual content", "Architecture-mapped projection", "Multi-night live operation"],
+                images: ["asset/portfolio/pottato-head/1.jpg", "asset/portfolio/pottato-head/2.jpg", "asset/portfolio/pottato-head/3.jpg"]
+            },
+            {
+                slug: "sudamala-resort",
+                category: "Projection Mapping",
+                title: "Sudamala Resort",
+                location: "Bali, Indonesia",
+                year: "2025",
+                scope: "Projection Mapping",
+                services: ["Projection Mapping", "Projector Setup", "Visual Assets"],
+                description: [
+                    "A resort-scale mapping piece built around the property's natural materials and low ambient lighting, keeping the visuals atmospheric rather than loud.",
+                    "Content was paced to match a slower, guest-facing environment — subtle motion, warm palettes, and cues timed to the evening's flow."
+                ],
+                highlights: ["Ambient, guest-facing visuals", "Warm, material-led palette", "Evening programming"],
+                images: ["asset/portfolio/sudamala-resort/1.jpg", "asset/portfolio/sudamala-resort/2.jpg", "asset/portfolio/sudamala-resort/3.jpg"]
+            },
+            {
+                slug: "clubhouse-customwar-2025",
+                category: "Projection Mapping",
+                title: "Club House CUSTOMWAR 2025",
+                location: "Bali, Indonesia",
+                year: "2025",
+                scope: "Projection Mapping + Stage Design",
+                services: ["Projection Mapping", "Stage Design", "Visual Jokey", "Projector Setup"],
+                description: [
+                    "Projection mapping and stage design for the CUSTOMWAR clubhouse event, built for a fast-moving automotive-community crowd.",
+                    "The visual language leaned bold and high-contrast to read clearly outdoors and hold energy through a full night program."
+                ],
+                highlights: ["Bold, high-contrast visuals", "Outdoor-readable design", "Full-night live show"],
+                images: ["asset/portfolio/clubhouse-customwar-2025/1.jpg", "asset/portfolio/clubhouse-customwar-2025/2.jpg", "asset/portfolio/clubhouse-customwar-2025/3.jpg"]
+            },
+            {
+                slug: "analogue-listening-space",
+                category: "Projection Mapping",
+                title: "Analogue Listening Space",
+                location: "Bali, Indonesia",
+                year: "2024",
+                scope: "Projection Mapping",
+                services: ["Projection Mapping", "Visual Assets", "Projector Setup"],
+                description: [
+                    "Visuals for an intimate listening-room setting, where the mapping had to support the music rather than compete with it.",
+                    "Slow-moving, texture-led content was used to keep the room calm while still giving the space a distinct visual identity."
+                ],
+                highlights: ["Sound-led visual pacing", "Texture-based content", "Intimate room scale"],
+                images: ["asset/portfolio/analogue-listening-space/1.jpg", "asset/portfolio/analogue-listening-space/2.jpg", "asset/portfolio/analogue-listening-space/3.jpg"]
+            },
+            {
+                slug: "dunia-ulu-cliffhouse",
+                category: "Lighting Design",
+                title: "DUNIA Ulu Cliffhouse",
+                location: "Bali, Indonesia",
+                year: "2024",
+                scope: "Lighting Design + Operation",
+                services: ["Lighting Rentals", "Lighting Operation", "Stage Design"],
+                description: [
+                    "A full lighting design for a cliffside venue, balancing dramatic sunset-to-night transitions with practical visibility for guests and staff.",
+                    "Fixtures and cues were planned around the site's natural views, so the lighting frames the landscape instead of overpowering it."
+                ],
+                highlights: ["Sunset-to-night lighting plan", "Site-specific fixture layout", "Live operation on site"],
+                images: ["asset/portfolio/dunia-ulu-cliffhouse/1.jpg", "asset/portfolio/dunia-ulu-cliffhouse/2.jpg", "asset/portfolio/dunia-ulu-cliffhouse/3.jpg"]
+            },
+            {
+                slug: "dats-event",
+                category: "Lighting Design",
+                title: "DATs Event",
+                location: "Bali, Indonesia",
+                year: "2024",
+                scope: "Lighting Design + Rentals",
+                services: ["Lighting Rentals", "Lighting Operation", "Stage Design", "Visual Jokey"],
+                description: [
+                    "Event lighting design and equipment rental for DATs, covering everything from stage wash to crowd-facing effects.",
+                    "The rig was built to be reconfigured quickly between segments of the event, so the mood could shift without downtime."
+                ],
+                highlights: ["Full rig design + rental", "Fast reconfiguration between sets", "Stage and crowd lighting"],
+                images: ["asset/portfolio/dats-event/1.jpg", "asset/portfolio/dats-event/2.jpg", "asset/portfolio/dats-event/3.jpg"]
+            },
+            {
+                slug: "missfish",
+                category: "Interactive Installation",
+                title: "MissFish",
+                location: "Bali, Indonesia",
+                year: "2024",
+                scope: "Interactive Installation",
+                services: ["Interactive Installation", "Visual Assets"],
+                description: [
+                    "An interactive new-media installation where visitor movement directly changes the visuals on display, built to invite play rather than passive viewing.",
+                    "Sensors and real-time visuals were tuned so the response feels immediate, encouraging people to experiment with the piece."
+                ],
+                highlights: ["Real-time, motion-responsive visuals", "Sensor-driven interaction", "Designed for repeat engagement"],
+                images: ["asset/portfolio/missfish/1.jpg", "asset/portfolio/missfish/2.jpg", "asset/portfolio/missfish/3.jpg"]
+            },
+            {
+                slug: "road-to-axean-fest",
+                category: "Projection Mapping",
+                title: "Road To AXEAN Fest — The Craft Ubud Hotel",
+                location: "Ubud, Bali, Indonesia",
+                year: "2025",
+                scope: "Projection Mapping",
+                services: ["Projection Mapping", "Visual Assets", "Projector Setup", "Stage Design"],
+                description: [
+                    "A pre-festival activation at The Craft Ubud Hotel, using projection mapping to build anticipation ahead of the main AXEAN Fest event.",
+                    "Content mixed brand elements with the hotel's own architecture, keeping the piece specific to the venue rather than a generic loop."
+                ],
+                highlights: ["Pre-event brand activation", "Venue-specific content", "Hotel architecture integration"],
+                images: ["asset/portfolio/road-to-axean-fest/1.jpg", "asset/portfolio/road-to-axean-fest/2.jpg", "asset/portfolio/road-to-axean-fest/3.jpg"]
+            },
+            {
+                slug: "noema-resort",
+                category: "Projection Mapping",
+                title: "NOEMA Resort",
+                location: "Bali, Indonesia",
+                year: "2025",
+                scope: "Projection Mapping",
+                services: ["Projection Mapping", "Projector Setup", "Visual Assets"],
+                description: [
+                    "A projection mapping piece for NOEMA Resort focused on soft, layered light rather than sharp graphic motion, matching the resort's minimal design language.",
+                    "The result reads as part of the building at rest and becomes an animated feature only when it's programmed to activate."
+                ],
+                highlights: ["Minimal, architecture-matched visuals", "Layered light over graphic motion", "Scheduled activation moments"],
+                images: ["asset/portfolio/noema-resort/1.jpg", "asset/portfolio/noema-resort/2.jpg", "asset/portfolio/noema-resort/3.jpg"]
+            }
+        ];
+
+        // ---------------- Service tag filter (multi-select) ----------------
+        const portfolioGrid = document.getElementById("portfolioGrid");
+        const tagFilter = document.getElementById("tagFilter");
+        const noResults = document.getElementById("noResults");
+        const portfolioSubtext = document.getElementById("portfolioSubtext");
+
+        // Unique list of services, in first-seen order across projects.
+        const allServices = [...new Set(portfolioData.flatMap(p => p.services))];
+        const selectedTags = new Set();
+
+        function renderTagFilter() {
+            const clearBtn = `<button type="button" class="tag-btn tag-btn-clear" id="tagClearBtn">All Services</button>`;
+            const tagBtns = allServices.map(service => `
+                <button type="button" class="tag-btn" data-tag="${service}" aria-pressed="${selectedTags.has(service)}">${service}</button>
+            `).join("");
+            tagFilter.innerHTML = clearBtn + tagBtns;
+        }
+
+        function renderPortfolioGrid() {
+            const filtered = selectedTags.size === 0
+                ? portfolioData
+                : portfolioData.filter(project => project.services.some(s => selectedTags.has(s)));
+
+            portfolioGrid.innerHTML = filtered.map((project) => {
+                return `
+                    <button class="portfolio-item" data-slug="${project.slug}">
+                        <h4>${project.title}</h4>
+                        <div class="item-tags">${project.services.map(s => `<span>${s}</span>`).join("")}</div>
+                        <span class="view-link">View project →</span>
+                    </button>
+                `;
+            }).join("");
+
+            noResults.hidden = filtered.length > 0;
+            portfolioGrid.hidden = filtered.length === 0;
+
+            if (selectedTags.size === 0) {
+                portfolioSubtext.textContent = "Click a project to view details & documentation";
+            } else {
+                portfolioSubtext.textContent = `Showing ${filtered.length} project${filtered.length === 1 ? "" : "s"} using: ${[...selectedTags].join(", ")}`;
+            }
+        }
+
+        function toggleTag(service) {
+            if (selectedTags.has(service)) {
+                selectedTags.delete(service);
+            } else {
+                selectedTags.add(service);
+            }
+            renderTagFilter();
+            renderPortfolioGrid();
+        }
+
+        function clearTags() {
+            selectedTags.clear();
+            renderTagFilter();
+            renderPortfolioGrid();
+        }
+
+        tagFilter.addEventListener("click", (e) => {
+            const clearBtn = e.target.closest("#tagClearBtn");
+            if (clearBtn) {
+                clearTags();
+                return;
+            }
+            const tagBtn = e.target.closest(".tag-btn[data-tag]");
+            if (tagBtn) {
+                toggleTag(tagBtn.dataset.tag);
+            }
+        });
+
+        function selectTagAndScroll(service) {
+            selectedTags.clear();
+            selectedTags.add(service);
+            renderTagFilter();
+            renderPortfolioGrid();
+        }
+
+        renderTagFilter();
+        renderPortfolioGrid();
+
+        // ---------------- Options panel ----------------
         const optionsBtn = document.getElementById("optionsBtn");
         const optionsPanel = document.getElementById("optionsPanel");
         const closeOptionsBtn = document.getElementById("closeOptionsBtn");
 
-        optionsBtn.addEventListener("click", () => {
-            optionsPanel.classList.toggle("active");
-        });
+        function toggleOptions(open) {
+            const shouldOpen = open ?? !optionsPanel.classList.contains("active");
+            optionsPanel.classList.toggle("active", shouldOpen);
+            optionsBtn.setAttribute("aria-expanded", String(shouldOpen));
+            optionsPanel.setAttribute("aria-hidden", String(!shouldOpen));
+        }
 
-        closeOptionsBtn.addEventListener("click", () => {
-            optionsPanel.classList.remove("active");
-        });
+        optionsBtn.addEventListener("click", () => toggleOptions());
+        closeOptionsBtn.addEventListener("click", () => toggleOptions(false));
 
-        // Fungsi Tombol Geser Portofolio di HP
-        const portfolioGrid = document.getElementById("portfolioGrid");
+        // ---------------- Portfolio horizontal scroll buttons ----------------
         const slideLeft = document.getElementById("slideLeft");
         const slideRight = document.getElementById("slideRight");
 
         slideLeft.addEventListener("click", () => {
-            portfolioGrid.scrollBy({ left: -300, behavior: 'smooth' });
+            portfolioGrid.scrollBy({ left: -300, behavior: "smooth" });
+        });
+        slideRight.addEventListener("click", () => {
+            portfolioGrid.scrollBy({ left: 300, behavior: "smooth" });
         });
 
-        slideRight.addEventListener("click", () => {
-            portfolioGrid.scrollBy({ left: 300, behavior: 'smooth' });
+        // ---------------- Portfolio detail routing ----------------
+        const mainContent = document.getElementById("mainContent");
+        const detailView = document.getElementById("detailView");
+        const backBtn = document.getElementById("backBtn");
+
+        const detailCategory = document.getElementById("detailCategory");
+        const detailTitle = document.getElementById("detailTitle");
+        const detailLocation = document.getElementById("detailLocation");
+        const detailYear = document.getElementById("detailYear");
+        const detailScope = document.getElementById("detailScope");
+        const detailDescription = document.getElementById("detailDescription");
+        const detailHighlights = document.getElementById("detailHighlights");
+        const detailGallery = document.getElementById("detailGallery");
+        const detailTags = document.getElementById("detailTags");
+        const detailCounter = document.getElementById("detailCounter");
+        const prevProjectBtn = document.getElementById("prevProjectBtn");
+        const nextProjectBtn = document.getElementById("nextProjectBtn");
+        const prevProjectTitle = document.getElementById("prevProjectTitle");
+        const nextProjectTitle = document.getElementById("nextProjectTitle");
+
+        function findProjectIndex(slug) {
+            return portfolioData.findIndex(p => p.slug === slug);
+        }
+
+        function renderProject(index) {
+            const project = portfolioData[index];
+            if (!project) return;
+
+            detailCategory.textContent = project.category;
+            detailTitle.textContent = project.title;
+            detailLocation.textContent = project.location;
+            detailYear.textContent = project.year;
+            detailScope.textContent = project.scope;
+            detailCounter.textContent = `${String(index + 1).padStart(2, "0")} / ${String(portfolioData.length).padStart(2, "0")}`;
+
+            detailTags.innerHTML = project.services.map(s => `<button type="button" data-tag="${s}">${s}</button>`).join("");
+
+            detailDescription.innerHTML = project.description.map(p => `<p>${p}</p>`).join("");
+
+            detailHighlights.innerHTML = "<h4>Highlights</h4>" +
+                project.highlights.map(h => `<li>${h}</li>`).join("");
+
+            detailGallery.innerHTML = project.images.map(src =>
+                `<div class="doc-photo" style="background-image:url('${src}')" role="img" aria-label="${project.title} documentation photo"></div>`
+            ).join("");
+
+            const prevIndex = (index - 1 + portfolioData.length) % portfolioData.length;
+            const nextIndex = (index + 1) % portfolioData.length;
+            prevProjectTitle.textContent = portfolioData[prevIndex].title;
+            nextProjectTitle.textContent = portfolioData[nextIndex].title;
+            prevProjectBtn.dataset.slug = portfolioData[prevIndex].slug;
+            nextProjectBtn.dataset.slug = portfolioData[nextIndex].slug;
+
+            detailView.scrollTop = 0;
+        }
+
+        function openProject(slug, { updateHash = true } = {}) {
+            const index = findProjectIndex(slug);
+            if (index === -1) return;
+
+            renderProject(index);
+
+            mainContent.style.display = "none";
+            detailView.classList.add("active");
+            detailView.setAttribute("aria-hidden", "false");
+
+            if (updateHash) {
+                history.pushState({ slug }, "", `#project-${slug}`);
+            }
+            backBtn.focus();
+        }
+
+        function closeProject({ updateHash = true } = {}) {
+            detailView.classList.remove("active");
+            detailView.setAttribute("aria-hidden", "true");
+            mainContent.style.display = "";
+
+            if (updateHash && location.hash.startsWith("#project-")) {
+                history.pushState({}, "", location.pathname + location.search);
+            }
+        }
+
+        portfolioGrid.addEventListener("click", (e) => {
+            const item = e.target.closest(".portfolio-item");
+            if (item) openProject(item.dataset.slug);
         });
+
+        backBtn.addEventListener("click", () => closeProject());
+
+        detailTags.addEventListener("click", (e) => {
+            const tagBtn = e.target.closest("button[data-tag]");
+            if (!tagBtn) return;
+            closeProject();
+            selectTagAndScroll(tagBtn.dataset.tag);
+            document.querySelector(".portfolio").scrollIntoView({ behavior: "smooth" });
+        });
+
+        prevProjectBtn.addEventListener("click", () => openProject(prevProjectBtn.dataset.slug));
+        nextProjectBtn.addEventListener("click", () => openProject(nextProjectBtn.dataset.slug));
+
+        window.addEventListener("popstate", () => {
+            const hash = location.hash;
+            if (hash.startsWith("#project-")) {
+                openProject(hash.replace("#project-", ""), { updateHash: false });
+            } else {
+                closeProject({ updateHash: false });
+            }
+        });
+
+        // Deep-link support: open directly on a project if the URL has a hash on load.
+        (function initFromHash() {
+            const hash = location.hash;
+            if (hash.startsWith("#project-")) {
+                openProject(hash.replace("#project-", ""), { updateHash: false });
+            }
+        })();
     </script>
 </body>
 </html>
