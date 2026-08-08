@@ -804,15 +804,14 @@
                 <h3>Our Strengths</h3>
                 <ul class="strengths-list">
                     <li>Projection Mapping</li>
-                    <li>Projector Rentals</li>
-                    <li>Projector Setup</li>
-                    <li>Projector Purchasing</li>
-                    <li>Lighting Rentals</li>
-                    <li>Lighting Purchasing</li>
-                    <li>Lighting Operation</li>
-                    <li>Stage Design</li>
-                    <li>Visual Jokey</li>
                     <li>Visual Assets</li>
+                    <li>Visual Jokey</li>
+                    <li>Stage Design</li>
+                    <li>Projector Rentals</li>
+                    <li>Lighting Operation</li>
+                    <li>Lighting Rentals</li>
+                    <li>Projector Purchasing</li>
+                    <li>Lighting Purchasing</li>
                     <li>Interactive Installation</li>
                 </ul>
             </div>
@@ -1033,8 +1032,34 @@
         const noResults = document.getElementById("noResults");
         const portfolioSubtext = document.getElementById("portfolioSubtext");
 
-        // Unique list of services, in first-seen order across projects.
-        const allServices = [...new Set(portfolioData.flatMap(p => p.services))];
+        // Unique list of services, ordered to match the "Our Strengths" list.
+        // Any service used in project data but not in this canonical order
+        // (e.g. tags only used internally) is appended at the end.
+        const SERVICE_ORDER = [
+            "Projection Mapping",
+            "Visual Assets",
+            "Visual Jokey",
+            "Stage Design",
+            "Projector Rentals",
+            "Lighting Operation",
+            "Lighting Rentals",
+            "Projector Purchasing",
+            "Lighting Purchasing",
+            "Interactive Installation"
+        ];
+
+        function sortByServiceOrder(services) {
+            return [...services].sort((a, b) => {
+                const ai = SERVICE_ORDER.indexOf(a);
+                const bi = SERVICE_ORDER.indexOf(b);
+                if (ai === -1 && bi === -1) return 0;
+                if (ai === -1) return 1;
+                if (bi === -1) return -1;
+                return ai - bi;
+            });
+        }
+
+        const allServices = sortByServiceOrder([...new Set(portfolioData.flatMap(p => p.services))]);
         const selectedTags = new Set();
 
         function renderTagFilter() {
@@ -1054,7 +1079,7 @@
                 return `
                     <button class="portfolio-item" data-slug="${project.slug}">
                         <h4>${project.title}</h4>
-                        <div class="item-tags">${project.services.map(s => `<span>${s}</span>`).join("")}</div>
+                        <div class="item-tags">${sortByServiceOrder(project.services).map(s => `<span>${s}</span>`).join("")}</div>
                         <span class="view-link">View project →</span>
                     </button>
                 `;
@@ -1169,7 +1194,7 @@
             detailScope.textContent = project.scope;
             detailCounter.textContent = `${String(index + 1).padStart(2, "0")} / ${String(portfolioData.length).padStart(2, "0")}`;
 
-            detailTags.innerHTML = project.services.map(s => `<button type="button" data-tag="${s}">${s}</button>`).join("");
+            detailTags.innerHTML = sortByServiceOrder(project.services).map(s => `<button type="button" data-tag="${s}">${s}</button>`).join("");
 
             detailDescription.innerHTML = project.description.map(p => `<p>${p}</p>`).join("");
 
