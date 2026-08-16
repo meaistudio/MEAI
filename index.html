@@ -55,8 +55,8 @@
             position: sticky;
             top: 0;
             z-index: 1150;
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             align-items: center;
             padding: 30px 50px;
             border-bottom: 1px solid var(--border-subtle);
@@ -67,15 +67,14 @@
             -webkit-backdrop-filter: blur(12px);
         }
 
-        .header-left, .header-center, .header-right {
+        .header-left, .header-right {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        .main-nav {
-            display: flex;
-            gap: 30px;
+        .header-left {
+            justify-self: start;
         }
 
         .nav-link {
@@ -89,6 +88,7 @@
             cursor: pointer;
             transition: color 0.2s;
             padding: 4px 0;
+            justify-self: center;
         }
 
         .nav-link:hover, .nav-link:focus-visible {
@@ -102,11 +102,6 @@
             filter: invert(100%) brightness(200%);
         }
 
-        .header-center {
-            text-transform: uppercase;
-            color: #888;
-        }
-
         .header-right {
             cursor: pointer;
             user-select: none;
@@ -115,6 +110,7 @@
             color: inherit;
             font-size: 21px;
             letter-spacing: 1px;
+            justify-self: end;
         }
 
         /* Panel Dropdown Options */
@@ -242,6 +238,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
+            text-align: center;
         }
 
         .hero-right p {
@@ -249,6 +247,7 @@
             line-height: 1.4;
             color: #cccccc;
             max-width: 500px;
+            margin: 0 auto;
         }
 
         /* About / Details Section */
@@ -877,12 +876,13 @@
         /* Responsive */
         @media (max-width: 768px) {
             .hero { grid-template-columns: 1fr; min-height: auto; }
-            header { padding: 16px 20px; flex-wrap: wrap; gap: 12px; row-gap: 12px; }
-            .header-right { padding: 10px 16px; }
-            .header-center { order: 3; width: 100%; justify-content: center; }
-            .main-nav { width: 100%; gap: 10px; }
+            header { grid-template-columns: 1fr 1fr; padding: 16px 20px; column-gap: 12px; row-gap: 12px; }
+            header > .header-left { grid-column: 1; grid-row: 1; }
+            header > .header-right { grid-column: 2; grid-row: 1; padding: 10px 16px; }
+            header > #navPortfolioBtn { grid-column: 1; grid-row: 2; }
+            header > #navRentalsBtn { grid-column: 2; grid-row: 2; }
             .nav-link {
-                flex: 1;
+                justify-self: stretch;
                 text-align: center;
                 padding: 12px 0;
                 border: 1px solid rgba(255, 255, 255, 0.15);
@@ -926,12 +926,8 @@
                 <img src="asset/logo/meai" alt="Meai Studio Logo" class="brand-logo">
                 <span>MEAI Studio</span>
             </div>
-            <div class="header-center">
-                <nav class="main-nav" aria-label="Primary">
-                    <button class="nav-link" id="navPortfolioBtn">Portfolio</button>
-                    <button class="nav-link" id="navRentalsBtn">Rentals</button>
-                </nav>
-            </div>
+            <button class="nav-link" id="navPortfolioBtn">Portfolio</button>
+            <button class="nav-link" id="navRentalsBtn">Rentals</button>
             <button class="header-right" id="optionsBtn" aria-expanded="false" aria-controls="optionsPanel">
                 <span>Contact</span>
             </button>
